@@ -2,10 +2,10 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CardMedia from '@material-ui/core/CardMedia';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
 
 
 
@@ -25,32 +25,35 @@ const RecipeSearchDisplay = ({recipeList}) => {
 
     console.log("recipe display fired")
     return (
-        <>
-        <h2>Recipe Display</h2>
-        <Grid container spacing={3}>
-            {recipeList.slice(0,8).map((recipeObject, index) => {
-                console.log(recipeObject.recipe.image)
-                return (
-                    <Grid key={index} item xs={6} md={3} >
-                    <Card>
-                        <CardContent>
-                            <Typography>
-                            {recipeObject.recipe.label}
-                            </Typography>
-                        </CardContent>
-                        <CardMedia
-                            className={classes.media}
-                            // component="img"
-                            image={recipeObject.recipe.image}
-                            title={recipeObject.recipe.label}
-                        />
-                    </Card>
-                    </Grid>
-                    )
-                })}
-        </Grid>
+        <Container maxWidth="lg">
+            <h2>Recipe Display</h2>
+            <Grid container spacing={3}>
+                {recipeList.slice(0,8).map((recipeObject, index) => {
+                    return (
+                        <Grid key={index} item xs={6} md={4} xl={3} >
+                        <Card>
+                            <CardContent>
+                                <Typography>
+                                {recipeObject.recipe.label}
+                                </Typography>
+                            </CardContent>
+                            <CardMedia
+                                className={classes.media}
+                                image={recipeObject.recipe.image}
+                                title={recipeObject.recipe.label}
+                            />
+                            <CardContent>
+                                <Typography variant="body2" color="textSecondary" component="p">
 
-        </>
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                        </Grid>
+                        )
+                    })}
+            </Grid>
+        </Container>
+
     )
 }
 

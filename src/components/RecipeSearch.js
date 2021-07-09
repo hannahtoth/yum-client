@@ -1,8 +1,9 @@
 import React from 'react';
-import {useRef, useState} from 'react';
+import {useRef, useState, useEffect} from 'react';
 import RecipeSearchDisplay from './RecipeSearchDisplay';
+import IngredientsListDisplay from './IngredientsListDisplay';
 //material-ui imports
-import { CardMedia, TextField } from '@material-ui/core'
+import { TextField } from '@material-ui/core'
 import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
 import Button from '@material-ui/core/Button';
 
@@ -14,7 +15,6 @@ import Button from '@material-ui/core/Button';
 // https://developer.edamam.com/edamam-docs-recipe-api
 
 
-
 const RecipeSearch = () => {
     const baseUrl = `https://api.edamam.com/api/recipes/v2`;
     const appId = `9c141499`;
@@ -23,16 +23,25 @@ const RecipeSearch = () => {
     const ingredientInput = useRef('');
     const ingredientListArray = useRef([]);
     const ingredientListString = useRef('');
+    const [recipeFetchToggle, setRecipeFetchToggle] = useState(false);
 
     const [recipeList, setRecipeList] = useState([]);
 
+    useEffect(() =>{
+        if (recipeFetchToggle) {
+            recipeQuery()
+        }
+    },[recipeFetchToggle])
+
+    
     const recipeQuery = async () => {
-        addIngredientToList()
-        let results = await fetch (`${baseUrl}?type=public&q=${ingredientListString.current}&app_id=${appId}&app_key=${appKey}`);
-        let jsonData = await results.json();
-        let recipes = await jsonData.hits;
-        setRecipeList(await recipes)
-        console.log(jsonData)
+            let results = await fetch (`${baseUrl}?type=public&q=${ingredientListString.current}&app_id=${appId}&app_key=${appKey}`);
+            let jsonData = await results.json();
+            let recipes = await jsonData.hits;
+            setRecipeList(await recipes)
+            console.log(jsonData)
+            setRecipeFetchToggle(false)
+
     }
 
     const addIngredientToList = () => {
@@ -40,11 +49,18 @@ const RecipeSearch = () => {
         ingredientListString.current = ingredientListArray.current.join()
         console.log(ingredientListArray.current)
         console.log(ingredientListString.current)
+        setRecipeFetchToggle(true)
+    }
+
+    const removeIngredientFromList = (ingredientListArray, ingredientListString) => {
+        setRecipeFetchToggle(true)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        recipeQuery()
+        addIngredientToList();
+        let inputField = document.getElementById('ingredient-input');
+        inputField.value = '';
         console.log('submitted');
     }
 
@@ -57,7 +73,7 @@ const RecipeSearch = () => {
         <h2>TESTING</h2>
         <form onSubmit={handleSubmit}>
             <TextField
-                id="outlined-basic"
+                id="ingredient-input"
                 label="Add an Ingredient"
                 variant="outlined" 
                 onChange={handleIngredientInput}
@@ -72,11 +88,18 @@ const RecipeSearch = () => {
             > Add Ingredient
             </Button>
         </form>
+
+        <IngredientsListDisplay
+            ingredientListArray={ingredientListArray}
+            ingredientListString={ingredientListString}
+            removeIngredientFromList={removeIngredientFromList}
+            />
+
         {recipeList.length>0
-        ? <RecipeSearchDisplay recipeList={recipeList}/>
-        : ingredientListArray.current.length === 0
-        ? "Add an ingredient to find recipes"
-        : "No recipes found"
+            ? <RecipeSearchDisplay recipeList={recipeList}/>
+            : ingredientListArray.current.length === 0
+            ? "Add an ingredient to find recipes"
+            : "No recipes found"
         }
 
         </>
