@@ -1,11 +1,13 @@
-
+import {useState} from 'react';
 import './App.css';
-import RecipeSearch from './components/RecipeSearch';
+import AppLoggedIn from './components/AppLoggedIn';
 
 function App() {
+
+  const [loggedIn, setLoggedIn] = useState(true)
   return (
     <div className="App">
-      <RecipeSearch />
+      {loggedIn ? <AppLoggedIn /> : <></>}
     </div>
   );
 }

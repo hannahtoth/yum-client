@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
+import Link from '@material-ui/core/Link';
 
 
 
@@ -28,7 +29,7 @@ const RecipeSearchDisplay = ({recipeList}) => {
         <Container maxWidth="lg">
             <h2>Recipe Display</h2>
             <Grid container spacing={3}>
-                {recipeList.slice(0,8).map((recipeObject, index) => {
+                {recipeList.slice(0,10).map((recipeObject, index) => {
                     return (
                         <Grid key={index} item xs={6} md={4} xl={3} >
                         <Card>
@@ -44,7 +45,11 @@ const RecipeSearchDisplay = ({recipeList}) => {
                             />
                             <CardContent>
                                 <Typography variant="body2" color="textSecondary" component="p">
-
+                                    <Link
+                                        href={recipeObject.recipe.url}
+                                        target='blank'
+                                        > Go to Recipe from {recipeObject.recipe.source}
+                                    </Link>
                                 </Typography>
                             </CardContent>
                         </Card>

@@ -6,6 +6,8 @@ import IngredientsListDisplay from './IngredientsListDisplay';
 import { TextField } from '@material-ui/core'
 import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
 import Button from '@material-ui/core/Button';
+import Pagination from '@material-ui/lab/Pagination';
+
 
 // Application ID
 // 9c141499
@@ -14,6 +16,17 @@ import Button from '@material-ui/core/Button';
 // Link for documentation:
 // https://developer.edamam.com/edamam-docs-recipe-api
 
+const RecipeSearchDisplayPages = ({recipeListPageCurr, recipeListPageTotal, handlePageChange}) => {
+    return (
+        <Pagination
+            count={recipeListPageTotal}
+            page={recipeListPageCurr}
+            color="primary"
+            onChange={handlePageChange}
+            boundaryCount={1}
+        />
+    )
+}
 
 const RecipeSearch = () => {
     const baseUrl = `https://api.edamam.com/api/recipes/v2`;
@@ -25,22 +38,49 @@ const RecipeSearch = () => {
     const ingredientListString = useRef('');
     const [recipeFetchToggle, setRecipeFetchToggle] = useState(false);
 
+    const [recipeJson, setRecipeJson] = useState(null);
     const [recipeList, setRecipeList] = useState([]);
+    const [recipeListPageCurr, setRecipeListPageCurr] = useState(null);
+    const [recipeListPageTotal, setRecipeListPageTotal] = useState(null);
+
+    const handlePageChange = (event, value) => {
+        console.log(event, value);
+        setRecipeListPageCurr(value);
+        setRecipeFetchToggle(true);
+        
+    }
 
     useEffect(() =>{
         if (recipeFetchToggle) {
             recipeQuery()
         }
-    },[recipeFetchToggle])
+    },[recipeFetchToggle, recipeListPageCurr])
 
-    
+
     const recipeQuery = async () => {
-            let results = await fetch (`${baseUrl}?type=public&q=${ingredientListString.current}&app_id=${appId}&app_key=${appKey}`);
-            let jsonData = await results.json();
-            let recipes = await jsonData.hits;
-            setRecipeList(await recipes)
-            console.log(jsonData)
-            setRecipeFetchToggle(false)
+            let fetchUrl = `${baseUrl}?type=public&q=${ingredientListString.current}&app_id=${appId}&app_key=${appKey}`
+
+
+            
+            if (recipeListPageCurr !== null && recipeListPageCurr > 1) {
+                console.log(recipeJson['_links']['next']['href'])
+                fetchUrl = recipeJson['_links']['next']['href'] ;
+            }
+            try {
+                
+                let results = await fetch (fetchUrl);
+                let jsonData = await results.json();
+                let recipes = await jsonData.hits;
+                setRecipeList(await recipes);
+                setRecipeJson(await jsonData);
+                // console.log(jsonData)
+                let totalPages = jsonData.count
+                setRecipeListPageTotal(Math.ceil(totalPages/10))
+                setRecipeFetchToggle(false)
+            } catch (err) {
+                console.log(`Error: ${err}`)
+            }
+
 
     }
 
@@ -52,7 +92,7 @@ const RecipeSearch = () => {
         setRecipeFetchToggle(true)
     }
 
-    const removeIngredientFromList = (ingredientListArray, ingredientListString) => {
+    const removeIngredientFromList = () => {
         setRecipeFetchToggle(true)
     }
 
@@ -67,6 +107,8 @@ const RecipeSearch = () => {
     const handleIngredientInput = (e) => {
         ingredientInput.current = e.target.value;
     }
+
+
 
     return (
         <>
@@ -88,7 +130,6 @@ const RecipeSearch = () => {
             > Add Ingredient
             </Button>
         </form>
-
         <IngredientsListDisplay
             ingredientListArray={ingredientListArray}
             ingredientListString={ingredientListString}
@@ -96,10 +137,17 @@ const RecipeSearch = () => {
             />
 
         {recipeList.length>0
-            ? <RecipeSearchDisplay recipeList={recipeList}/>
-            : ingredientListArray.current.length === 0
-            ? "Add an ingredient to find recipes"
-            : "No recipes found"
+            ?   <>
+                <RecipeSearchDisplayPages
+                    recipeListPageCurr={recipeListPageCurr}
+                    recipeListPageTotal={recipeListPageTotal}
+                    handlePageChange={handlePageChange}
+                /> 
+                <RecipeSearchDisplay recipeList={recipeList}/>
+                </>
+            :   ingredientListArray.current.length === 0
+            ?   "Add an ingredient to find recipes"
+            :   "No recipes found"
         }
 
         </>
