@@ -1,7 +1,7 @@
 import React from 'react';
 
-//material-ui ingredient chip imports
-import Chip from '@material-ui/core/Chip';
+//material-ui imports
+import { Chip } from '../materialuiexports';
 
 const IngredientsListDisplay = ({ingredientListArray, ingredientListString, removeIngredientFromList}) => {
 

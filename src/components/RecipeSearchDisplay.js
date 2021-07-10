@@ -1,16 +1,10 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import CardMedia from '@material-ui/core/CardMedia';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
+import { Button, CardMedia, Card, CardContent, Typography, Grid, Container, Link } from '../materialuiexports';
 
 
 
-const RecipeSearchDisplay = ({recipeList}) => {
+const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe}) => {
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -24,7 +18,13 @@ const RecipeSearchDisplay = ({recipeList}) => {
     
     const classes = useStyles();
 
-    console.log("recipe display fired")
+    const handleAddNewRecipe = (e) => {
+        // console.log('new recipe button clicked');
+        setNewRecipe(newRecipe=>true);
+        // console.log(e.target.closest('.MuiCard-root'));
+    }
+
+    // console.log("recipe display fired")
     return (
         <Container maxWidth="lg">
             <h2>Recipe Display</h2>
@@ -51,6 +51,13 @@ const RecipeSearchDisplay = ({recipeList}) => {
                                         > Go to Recipe from {recipeObject.recipe.source}
                                     </Link>
                                 </Typography>
+                                <Button
+                                    variant="outlined"
+                                    color="primary"
+                                    size="small"  
+                                    onClick={handleAddNewRecipe}
+                                > Add To Cookbook
+                                </Button>
                             </CardContent>
                         </Card>
                         </Grid>

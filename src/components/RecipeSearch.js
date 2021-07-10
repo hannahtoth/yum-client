@@ -3,10 +3,7 @@ import {useRef, useState, useEffect} from 'react';
 import RecipeSearchDisplay from './RecipeSearchDisplay';
 import IngredientsListDisplay from './IngredientsListDisplay';
 //material-ui imports
-import { TextField } from '@material-ui/core'
-import AddCircleOutlineTwoToneIcon from '@material-ui/icons/AddCircleOutlineTwoTone';
-import Button from '@material-ui/core/Button';
-import Pagination from '@material-ui/lab/Pagination';
+import { TextField, AddCircleOutlineTwoToneIcon, Button, Pagination } from '../materialuiexports';
 
 
 // Application ID
@@ -16,22 +13,24 @@ import Pagination from '@material-ui/lab/Pagination';
 // Link for documentation:
 // https://developer.edamam.com/edamam-docs-recipe-api
 
-const RecipeSearchDisplayPages = ({recipeListPageCurr, recipeListPageTotal, handlePageChange}) => {
-    return (
-        <Pagination
-            count={recipeListPageTotal}
-            page={recipeListPageCurr}
-            color="primary"
-            onChange={handlePageChange}
-            boundaryCount={1}
-        />
-    )
-}
+//Pagination under construction
+// const RecipeSearchDisplayPages = ({recipeListPageCurr, recipeListPageTotal, handlePageChange}) => {
+//     return (
+//         <Pagination
+//             count={recipeListPageTotal}
+//             page={recipeListPageCurr}
+//             color="primary"
+//             onChange={handlePageChange}
+//             boundaryCount={1}
+//         />
+//     )
+// }
 
-const RecipeSearch = () => {
+const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
     const baseUrl = `https://api.edamam.com/api/recipes/v2`;
     const appId = `9c141499`;
     const appKey = `d64c51d6958faa1ca82627551b9e8824`;
+    const fields = `&field=label&field=image&field=source&field=url&field=ingredientLines&field=ingredients&field=cuisineType`
 
     const ingredientInput = useRef('');
     const ingredientListArray = useRef([]);
@@ -58,10 +57,7 @@ const RecipeSearch = () => {
 
 
     const recipeQuery = async () => {
-            let fetchUrl = `${baseUrl}?type=public&q=${ingredientListString.current}&app_id=${appId}&app_key=${appKey}`
-
-
-            
+            let fetchUrl = `${baseUrl}?type=public&q=${ingredientListString.current}&app_id=${appId}&app_key=${appKey}${fields}`
             if (recipeListPageCurr !== null && recipeListPageCurr > 1) {
                 console.log(recipeJson['_links']['next']['href'])
                 fetchUrl = recipeJson['_links']['next']['href'] ;
@@ -69,7 +65,7 @@ const RecipeSearch = () => {
             try {
                 
                 let results = await fetch (fetchUrl);
-                let jsonData = await results.json();
+                let jsonData = await results.json(); 
                 let recipes = await jsonData.hits;
                 setRecipeList(await recipes);
                 setRecipeJson(await jsonData);
@@ -109,7 +105,6 @@ const RecipeSearch = () => {
     }
 
 
-
     return (
         <>
         <h2>TESTING</h2>
@@ -138,12 +133,16 @@ const RecipeSearch = () => {
 
         {recipeList.length>0
             ?   <>
-                <RecipeSearchDisplayPages
+                {/* <RecipeSearchDisplayPages
                     recipeListPageCurr={recipeListPageCurr}
                     recipeListPageTotal={recipeListPageTotal}
                     handlePageChange={handlePageChange}
-                /> 
-                <RecipeSearchDisplay recipeList={recipeList}/>
+                />  */}
+                <RecipeSearchDisplay
+                    recipeList={recipeList}
+                    newRecipe={newRecipe}
+                    setNewRecipe={setNewRecipe}
+                />
                 </>
             :   ingredientListArray.current.length === 0
             ?   "Add an ingredient to find recipes"
