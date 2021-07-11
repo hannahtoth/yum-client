@@ -69,7 +69,7 @@ const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
                 let recipes = await jsonData.hits;
                 setRecipeList(await recipes);
                 setRecipeJson(await jsonData);
-                // console.log(jsonData)
+
                 let totalPages = jsonData.count
                 setRecipeListPageTotal(Math.ceil(totalPages/10))
                 setRecipeFetchToggle(false)
