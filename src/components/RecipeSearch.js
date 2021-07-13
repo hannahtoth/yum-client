@@ -2,10 +2,11 @@ import React from 'react';
 import {useRef, useState, useEffect} from 'react';
 import RecipeSearchDisplay from './RecipeSearchDisplay';
 import IngredientsListDisplay from './IngredientsListDisplay';
+import RecipeSearchPageButtons from './RecipeSearchPageButtons';
 //material-ui imports
-import { TextField, AddCircleOutlineTwoToneIcon, Button, Pagination } from '../materialuiexports';
+import { TextField, AddCircleOutlineTwoToneIcon, Button} from '../materialuiexports';
 
-
+//Edamam API Info
 // Application ID
 // 9c141499
 // Application Key
@@ -13,62 +14,42 @@ import { TextField, AddCircleOutlineTwoToneIcon, Button, Pagination } from '../m
 // Link for documentation:
 // https://developer.edamam.com/edamam-docs-recipe-api
 
-// Pagination under construction
-const RecipeSearchDisplayPages = ({recipeListPageCurr, recipeListPageTotal, handlePageChange}) => {
-    return (
-        <>
-        <Button>Previous</Button>
-        <Button>Next</Button>
-        </>
-    )
-}
+
 
 const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
     const baseUrl = `https://api.edamam.com/api/recipes/v2`;
     const appId = `9c141499`;
     const appKey = `d64c51d6958faa1ca82627551b9e8824`;
     const fields = `&field=label&field=image&field=source&field=url&field=ingredientLines&field=ingredients&field=cuisineType`
+    const currentFetchUrl = useRef('');
+    const nextFetchUrl = useRef('');
+    const previousFetchUrls = useRef([]);
+    const recipeListPage = useRef(0);
 
     const ingredientInput = useRef('');
     const ingredientListArray = useRef([]);
     const ingredientListString = useRef('');
     const [recipeFetchToggle, setRecipeFetchToggle] = useState(false);
-
-    const [recipeJson, setRecipeJson] = useState(null);
     const [recipeList, setRecipeList] = useState([]);
-    const [recipeListPageCurr, setRecipeListPageCurr] = useState(null);
-    const [recipeListPageTotal, setRecipeListPageTotal] = useState(null);
-
-    const handlePageChange = (event, value) => {
-        console.log(event, value);
-        setRecipeListPageCurr(value);
-        setRecipeFetchToggle(true);
-        
-    }
 
     useEffect(() =>{
         if (recipeFetchToggle) {
             recipeQuery()
         }
-    },[recipeFetchToggle, recipeListPageCurr])
+    },[recipeFetchToggle])
 
 
     const recipeQuery = async () => {
-            let fetchUrl = `${baseUrl}?type=public&q=${ingredientListString.current}&app_id=${appId}&app_key=${appKey}${fields}`
-            if (recipeListPageCurr !== null && recipeListPageCurr > 1) {
-                console.log(recipeJson['_links']['next']['href'])
-                fetchUrl = recipeJson['_links']['next']['href'] ;
-            }
             try {
                 
-                let results = await fetch (fetchUrl);
+                let results = await fetch (currentFetchUrl.current);
                 let jsonData = await results.json(); 
                 let recipes = await jsonData.hits;
                 setRecipeList(await recipes);
-                setRecipeJson(await jsonData);
                 console.log(jsonData)
-                let totalPages = jsonData.count
-                setRecipeListPageTotal(Math.ceil(totalPages/10))
+                
+                nextFetchUrl.current = await jsonData['_links']['next']['href']
+
                 setRecipeFetchToggle(false)
             } catch (err) {
                 console.log(`Error: ${err}`)
@@ -78,23 +59,24 @@ const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
     }
 
     const addIngredientToList = () => {
-        ingredientListArray.current = [...ingredientListArray.current, ingredientInput.current]
-        ingredientListString.current = ingredientListArray.current.join()
-        console.log(ingredientListArray.current)
-        console.log(ingredientListString.current)
-        setRecipeFetchToggle(true)
+        ingredientListArray.current = [...ingredientListArray.current, ingredientInput.current];
+        ingredientListString.current = ingredientListArray.current.join();
+        currentFetchUrl.current = `${baseUrl}?type=public&q=${ingredientListString.current}&app_id=${appId}&app_key=${appKey}${fields}`;
+        recipeListPage.current = 1;
+        console.log(`page: ${recipeListPage.current}`)
+        setRecipeFetchToggle(true);
     }
 
     const removeIngredientFromList = () => {
+        currentFetchUrl.current = `${baseUrl}?type=public&q=${ingredientListString.current}&app_id=${appId}&app_key=${appKey}${fields}`;
         setRecipeFetchToggle(true)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmitAddIngredient = (e) => {
         e.preventDefault();
         addIngredientToList();
         let inputField = document.getElementById('ingredient-input');
         inputField.value = '';
-        console.log('submitted');
     }
 
     const handleIngredientInput = (e) => {
@@ -105,7 +87,7 @@ const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
     return (
         <>
         <h2>TESTING</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitAddIngredient}>
             <TextField
                 id="ingredient-input"
                 label="Add an Ingredient"
@@ -131,10 +113,12 @@ const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
         {recipeList.length>0
             ?   <>
                 <div>
-                    <RecipeSearchDisplayPages
-                        recipeListPageCurr={recipeListPageCurr}
-                        recipeListPageTotal={recipeListPageTotal}
-                        // handlePageChange={handlePageChange}
+                    <RecipeSearchPageButtons
+                        recipeListPage={recipeListPage}
+                        currentFetchUrl={currentFetchUrl}
+                        nextFetchUrl={nextFetchUrl}
+                        previousFetchUrls={previousFetchUrls}
+                        setRecipeFetchToggle={setRecipeFetchToggle}
                     /> 
                 </div>
                 <div>
