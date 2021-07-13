@@ -5,7 +5,7 @@ import addRecipeToCookbook from './helper_functions/addRecipeToCookbook';
 
 
 
-const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe}) => {
+const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe, recipeListPage}) => {
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -35,7 +35,7 @@ const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe}) => {
         <Container maxWidth="lg">
             <h2>Recipe Display</h2>
             <Grid container spacing={3}>
-                {recipeList.slice(0,10).map((recipeObject, index) => {
+                {recipeList.slice(0,11).map((recipeObject, index) => {
                     return (
                         <Grid key={index} item xs={6} md={4} xl={3} >
                         <Card data-recipe-name = {recipeObject.recipe.label}>

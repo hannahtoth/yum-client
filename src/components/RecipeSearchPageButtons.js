@@ -11,19 +11,20 @@ const RecipeSearchPageButtons = ({
 
         const handleClickNext = (e) => {
             e.preventDefault()
+            recipeListPage.current++;
             previousFetchUrls.current = [...previousFetchUrls.current, currentFetchUrl.current];
             currentFetchUrl.current = nextFetchUrl.current;
-            recipeListPage.current++;
             console.log(`page: ${recipeListPage.current}`)
+            console.log(previousFetchUrls.current)
             setRecipeFetchToggle(true)
         }
 
         const handleClickPrevious = (e) => {
             e.preventDefault()
-
-            currentFetchUrl.current = previousFetchUrls.current[recipeListPage.current-2];
-            previousFetchUrls.current = previousFetchUrls.current.filter((element, index) => index < previousFetchUrls.current.length - 1);
             recipeListPage.current--;
+            currentFetchUrl.current = previousFetchUrls.current[recipeListPage.current-1];
+            previousFetchUrls.current.pop()
+            console.log(previousFetchUrls.current)
             console.log(`page: ${recipeListPage.current}`)
             setRecipeFetchToggle(true)
 

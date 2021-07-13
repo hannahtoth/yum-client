@@ -40,6 +40,7 @@ const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
 
 
     const recipeQuery = async () => {
+        // if (recipeListPage.current === 0) recipeListPage.current = 1;
             try {
                 
                 let results = await fetch (currentFetchUrl.current);
@@ -54,8 +55,6 @@ const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
             } catch (err) {
                 console.log(`Error: ${err}`)
             }
-
-
     }
 
     const addIngredientToList = () => {
@@ -126,6 +125,7 @@ const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
                         recipeList={recipeList}
                         newRecipe={newRecipe}
                         setNewRecipe={setNewRecipe}
+                        recipeListPage={recipeListPage}
                     />
                 </div>
                 </>
