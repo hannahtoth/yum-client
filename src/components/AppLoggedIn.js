@@ -11,7 +11,7 @@ const AppLoggedIn = () => {
       //Do the things if new recipe is set to true on state change.
     }
     setNewRecipe(false);
-  });
+  },[newRecipe]);
 
   return (
     <>
