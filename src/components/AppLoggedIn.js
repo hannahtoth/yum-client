@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import RecipeSearch from './RecipeSearch';
+import RecipeIndex from './RecipeIndex';
 
 const AppLoggedIn = () => {
   const [newRecipe, setNewRecipe] = useState(false);
@@ -16,7 +17,7 @@ const AppLoggedIn = () => {
     <>
       <RecipeSearch newRecipe={newRecipe} setNewRecipe={setNewRecipe} />
 
-      <h1>Place holder for RecipeIndex</h1>
+      <RecipeIndex />
     </>
   );
 };
