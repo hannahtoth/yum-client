@@ -13,18 +13,15 @@ import { TextField, AddCircleOutlineTwoToneIcon, Button, Pagination } from '../m
 // Link for documentation:
 // https://developer.edamam.com/edamam-docs-recipe-api
 
-//Pagination under construction
-// const RecipeSearchDisplayPages = ({recipeListPageCurr, recipeListPageTotal, handlePageChange}) => {
-//     return (
-//         <Pagination
-//             count={recipeListPageTotal}
-//             page={recipeListPageCurr}
-//             color="primary"
-//             onChange={handlePageChange}
-//             boundaryCount={1}
-//         />
-//     )
-// }
+// Pagination under construction
+const RecipeSearchDisplayPages = ({recipeListPageCurr, recipeListPageTotal, handlePageChange}) => {
+    return (
+        <>
+        <Button>Previous</Button>
+        <Button>Next</Button>
+        </>
+    )
+}
 
 const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
     const baseUrl = `https://api.edamam.com/api/recipes/v2`;
@@ -69,7 +66,7 @@ const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
                 let recipes = await jsonData.hits;
                 setRecipeList(await recipes);
                 setRecipeJson(await jsonData);
-
+                console.log(jsonData)
                 let totalPages = jsonData.count
                 setRecipeListPageTotal(Math.ceil(totalPages/10))
                 setRecipeFetchToggle(false)
@@ -133,16 +130,20 @@ const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
 
         {recipeList.length>0
             ?   <>
-                {/* <RecipeSearchDisplayPages
-                    recipeListPageCurr={recipeListPageCurr}
-                    recipeListPageTotal={recipeListPageTotal}
-                    handlePageChange={handlePageChange}
-                />  */}
-                <RecipeSearchDisplay
-                    recipeList={recipeList}
-                    newRecipe={newRecipe}
-                    setNewRecipe={setNewRecipe}
-                />
+                <div>
+                    <RecipeSearchDisplayPages
+                        recipeListPageCurr={recipeListPageCurr}
+                        recipeListPageTotal={recipeListPageTotal}
+                        // handlePageChange={handlePageChange}
+                    /> 
+                </div>
+                <div>
+                    <RecipeSearchDisplay
+                        recipeList={recipeList}
+                        newRecipe={newRecipe}
+                        setNewRecipe={setNewRecipe}
+                    />
+                </div>
                 </>
             :   ingredientListArray.current.length === 0
             ?   "Add an ingredient to find recipes"
