@@ -10,6 +10,8 @@ const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe}) => {
         root: {
             maxWidth: 345
         },
+
+       
         media: {
             height: "100%",
             paddingTop: '56.25%'
@@ -29,10 +31,12 @@ const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe}) => {
         <Container maxWidth="lg">
             <h2>Recipe Display</h2>
             <Grid container spacing={3}>
-                {recipeList.slice(0,10).map((recipeObject, index) => {
+                {recipeList.slice(0,9).map((recipeObject, index) => {
                     return (
                         <Grid key={index} item xs={6} md={4} xl={3} >
-                        <Card>
+                        <Card style={{
+                        color: "#476040",
+                            }}>
                             <CardContent>
                                 <Typography>
                                 {recipeObject.recipe.label}
@@ -44,16 +48,21 @@ const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe}) => {
                                 title={recipeObject.recipe.label}
                             />
                             <CardContent>
-                                <Typography variant="body2" color="textSecondary" component="p">
+                                <Typography variant="body2"  component="p">
                                     <Link
+                                style={{
+                                    color: "#b55139",
+                                        }}
                                         href={recipeObject.recipe.url}
                                         target='blank'
                                         > Go to Recipe from {recipeObject.recipe.source}
                                     </Link>
                                 </Typography>
                                 <Button
-                                    variant="outlined"
-                                    color="primary"
+                                   
+                                    style={{
+                                        background: "#ed8733",
+                                        color: "white"}}
                                     size="small"  
                                     onClick={handleAddNewRecipe}
                                 > Add To Cookbook

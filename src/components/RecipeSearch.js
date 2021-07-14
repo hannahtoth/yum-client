@@ -107,7 +107,7 @@ const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
 
     return (
         <>
-        <h2>TESTING</h2>
+        <h2>Search By Ingredient</h2>
         <form onSubmit={handleSubmit}>
             <TextField
                 id="ingredient-input"
@@ -115,11 +115,16 @@ const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
                 variant="outlined" 
                 onChange={handleIngredientInput}
             />
+            <br/>
             <Button
                 type="submit"
                 variant="contained"
-                color="primary"
-                size="large"
+                size="medium"
+                style={{
+                    backgroundColor:"#476040",
+                    color: "white",
+                    margin: 20,
+                }}
                 // className={classes.button}
                 startIcon={<AddCircleOutlineTwoToneIcon />}
             > Add Ingredient
