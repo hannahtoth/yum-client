@@ -4,16 +4,19 @@
 import {useState} from 'react';
 import './App.css';
 import AppLoggedIn from './components/AppLoggedIn';
+import Portal from './components/Portal';
 import Navbar from './components/Navbar';
 
-function App() {
 
-  const [loggedIn, setLoggedIn] = useState(true)
+function App() {
   
   return (
     <div className="App">
-      <Navbar />
-      {loggedIn ? <AppLoggedIn /> : <></>}
+
+     <Navbar />
+     {/* {loggedIn ? <AppLoggedIn /> : <Portal/>} */}
+     <Portal/>
+
     </div>
   );
 }
