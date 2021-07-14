@@ -1,4 +1,14 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import {
+  Button,
+  CardMedia,
+  Card,
+  CardContent,
+  Typography,
+  Grid,
+  Container,
+  Link,
+} from '../materialuiexports';
 
 const RecipeIndex = (props) => {
   const [recipes, setRecipes] = useState([]);
@@ -18,16 +28,48 @@ const RecipeIndex = (props) => {
       })
       .catch((err) => console.log(err));
   };
-
+  //Fetch recipes
   const fetchHelper = (e) => {
     e.preventDefault();
     console.log('fetch recipes started');
     fetchRecipes();
   };
+  //Delete recipe
+  const deleteRecipe = async (recipeId) => {
+    try {
+      let response = await fetch(
+        `http://localhost:3000/cookbook/delete/${recipeId}`,
+        {
+          method: 'DELETE',
+          headers: new Headers({
+            'Content-Type': 'application/json',
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNjI2MjE4NDQ3LCJleHAiOjE2MjYzOTEyNDd9.DF2KaZIPPjdsHfISiz-hkgVsYy2-q6kcd7K0r0NHXjI`,
+          }),
+        }
+      );
+      let jsonData = await response.json();
+      console.log(jsonData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deleteHelper = (e) => {
+    e.preventDefault();
+    console.log('recipe deleted');
+
+    let recipeToRemove = e.target.getAttribute('recipeid-data');
+    console.log(recipeToRemove);
+
+    deleteRecipe(recipeToRemove);
+    fetchRecipes();
+  };
   return (
     <Fragment>
-      <h1>Testing</h1>
-      <button onClick={fetchHelper}>fetchTest</button>
+      <h1>Cook Book</h1>
+      <Button onClick={fetchHelper} variant="contained" color="primary">
+        Load my cookbook
+      </Button>
       {recipes.map((recipe) => {
         return (
           <Fragment>
@@ -38,6 +80,14 @@ const RecipeIndex = (props) => {
               {recipe.source}
             </a>
             <img src={recipe.image} alt="" width="400px"></img>
+            <Button
+              onClick={deleteHelper}
+              recipeid-data={recipe.id}
+              variant="contained"
+              color="primary"
+            >
+              Remove Recipe
+            </Button>
           </Fragment>
         );
       })}
