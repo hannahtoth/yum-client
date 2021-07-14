@@ -16,7 +16,7 @@ import { TextField, AddCircleOutlineTwoToneIcon, Button} from '../materialuiexpo
 
 
 
-const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
+const RecipeSearch = ({newRecipe, setNewRecipe, sessionToken} ) => {
     const baseUrl = `https://api.edamam.com/api/recipes/v2`;
     const appId = `9c141499`;
     const appKey = `d64c51d6958faa1ca82627551b9e8824`;
@@ -85,7 +85,7 @@ const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
         <>
 
         <h2>Search By Ingredient</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitAddIngredient}>
 
             <TextField
                 id="ingredient-input"
@@ -131,6 +131,7 @@ const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
                         newRecipe={newRecipe}
                         setNewRecipe={setNewRecipe}
                         recipeListPage={recipeListPage}
+                        sessionToken={sessionToken}
                     />
                 </div>
                 </>

@@ -1,3 +1,4 @@
+import React from 'react'
 import { PinDropSharp } from '@material-ui/icons'
 import { useState, useEffect } from 'react'
 import Login from './Login'
@@ -9,7 +10,6 @@ const Portal = () => {
     const [password, setPassword] = useState()
     const [loggedIn, setLoggedIn] = useState(false)
     const [sessionToken, setSessionToken] = useState('')
-
 
     useEffect(() => {
         if (localStorage.getItem('token')){
@@ -75,7 +75,8 @@ const Portal = () => {
                     setUsername={setUsername}
                     toggle={toggleLoginSignup}
                     loginForm={loginForm}
-                    loggedIn={loggedIn} />
+                    loggedIn={loggedIn}
+                    sessionToken={sessionToken}/>
                 : <Signup
                     username={username}
                     setPassword={setPassword}
@@ -83,7 +84,8 @@ const Portal = () => {
                     toggle={toggleLoginSignup}
                     signUpForm={signUpForm}
                     password={password}
-                    loggedIn={loggedIn} />}
+                    loggedIn={loggedIn}
+                    sessionToken={sessionToken} />}
         </>
     )
 }
