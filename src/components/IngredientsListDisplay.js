@@ -30,8 +30,11 @@ const IngredientsListDisplay = ({ingredientListArray, ingredientListString, remo
                     ingredient={ingredient}
                     label={ingredient}
                     onDelete={handleDelete}
-                    color="primary"
                     variant="outlined"
+                    style={{
+                        color: "#476040"
+                    }}
+                    
                 />
             )
         })
