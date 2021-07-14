@@ -5,7 +5,7 @@ import addRecipeToCookbook from './helper_functions/addRecipeToCookbook';
 
 
 
-const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe, recipeListPage}) => {
+const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe, recipeListPage, sessionToken}) => {
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -29,7 +29,7 @@ const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe, recipeListPag
         
         console.log(recipeObject)
         
-        addRecipeToCookbook(recipeObject, setNewRecipe)
+        addRecipeToCookbook(recipeObject, setNewRecipe, sessionToken)
 
     }
 
@@ -78,6 +78,7 @@ const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe, recipeListPag
                                 > Add To Cookbook
                                 </Button>
                             </CardContent>
+                        </Card>
                         </Card>
                         </Grid>
                         )

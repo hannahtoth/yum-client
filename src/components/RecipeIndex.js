@@ -18,7 +18,7 @@ const RecipeIndex = (props) => {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json',
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjI2MTI2NjE5LCJleHAiOjE2MjYyOTk0MTl9.AQzFq8VPjueCJHEvC0xFp8hN48QggXcs0aRZ2tcGSOs`,
+        Authorization: `Bearer ${props.sessionToken}`,
       }),
     })
       .then((res) => res.json())
@@ -43,7 +43,7 @@ const RecipeIndex = (props) => {
           method: 'DELETE',
           headers: new Headers({
             'Content-Type': 'application/json',
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiaWF0IjoxNjI2MjE4NDQ3LCJleHAiOjE2MjYzOTEyNDd9.DF2KaZIPPjdsHfISiz-hkgVsYy2-q6kcd7K0r0NHXjI`,
+            Authorization: `Bearer ${props.sessionToken}`,
           }),
         }
       );
@@ -57,8 +57,9 @@ const RecipeIndex = (props) => {
   const deleteHelper = (e) => {
     e.preventDefault();
     console.log('recipe deleted');
-
-    let recipeToRemove = e.target.getAttribute('recipeid-data');
+    console.log(e.target)
+    let clickedButton = e.target.closest('button');
+    let recipeToRemove = clickedButton.getAttribute('recipeid-data');
     console.log(recipeToRemove);
 
     deleteRecipe(recipeToRemove);

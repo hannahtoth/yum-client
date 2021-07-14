@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import RecipeSearch from './RecipeSearch';
 import RecipeIndex from './RecipeIndex';
 
-const AppLoggedIn = () => {
+const AppLoggedIn = (props) => {
   const [newRecipe, setNewRecipe] = useState(false);
 
   useEffect(() => {
@@ -15,9 +15,9 @@ const AppLoggedIn = () => {
 
   return (
     <>
-      <RecipeSearch newRecipe={newRecipe} setNewRecipe={setNewRecipe} />
+      <RecipeSearch newRecipe={newRecipe} setNewRecipe={setNewRecipe} sessionToken={props.sessionToken} />
 
-      <RecipeIndex />
+      <RecipeIndex sessionToken={props.sessionToken} />
     </>
   );
 };

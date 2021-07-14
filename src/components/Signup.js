@@ -18,7 +18,7 @@ const Signup = (props) => {
     return (
         <>
             {props.loggedIn ?
-                <AppLoggedIn /> :
+                <AppLoggedIn sessionToken={props.sessionToken} /> :
                 <form>
                     <h1>Sign Up!</h1>
                     <label>Username: </label>
