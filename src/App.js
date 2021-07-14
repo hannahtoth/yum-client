@@ -1,14 +1,15 @@
 import {useState} from 'react';
 import './App.css';
 import AppLoggedIn from './components/AppLoggedIn';
+import Portal from './components/Portal';
 
 function App() {
-
-  const [loggedIn, setLoggedIn] = useState(true)
   
   return (
     <div className="App">
-      {loggedIn ? <AppLoggedIn /> : <></>}
+
+     {/* {loggedIn ? <AppLoggedIn /> : <Portal/>} */}
+     <Portal/>
     </div>
   );
 }
