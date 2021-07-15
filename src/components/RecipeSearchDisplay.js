@@ -40,7 +40,7 @@ const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe, recipeListPag
 
                 {recipeList.slice(0,9).map((recipeObject, index) => {
                     return (
-                        <Grid key={index} item xs={6} md={4} xl={3} >
+                        <Grid key={index} item xs={12} sm={6} md={4} xl={3} >
                         <Card style={{
                         color: "#476040",
                             }}>
