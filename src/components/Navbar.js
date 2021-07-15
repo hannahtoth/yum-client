@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Button, Typography, AppBar, Toolbar, IconButton, MenuIcon, Avatar, MenuItem, Menu} from '../materialuiexports';
+import { BottomNavigation } from '@material-ui/core';
 
 
 const Navbar = ({}) => {
@@ -23,13 +24,18 @@ const useStyles = makeStyles((theme) => ({
         },
 
         logo: {
-            maxWidth: 60,
+            maxWidth: 200,
 
            
           },
 
+          tagline: {
+            maxWidth: 100,
+            maxHeight: 100,
+            
+          },
+
           button: {
-              
               marginTop: 60,
           }
 
@@ -45,7 +51,8 @@ const useStyles = makeStyles((theme) => ({
               backgroundColor: "#789174"
             }}>
               <Toolbar>
-                <img src='yumLogo.png' alt='logo' className={classes.logo} />
+                <img src='YumLogo.png' alt='tagline' className={classes.tagline} />
+                 <img src='yum-tagline.png' alt='logo' className={classes.logo} />
                 
                
                 <Typography variant="h8"
@@ -53,12 +60,12 @@ const useStyles = makeStyles((theme) => ({
                 style={{
                     color: 'white'
                 }} className={classes.title}>
-                where recipes find you
+                
                 </Typography>
             
                 <Button color="inherit" 
                 style={{
-                    color: 'white'
+                    color: '#D2DAC3'
                 }} className={classes.button}>Login</Button>
               </Toolbar>
             </AppBar>
