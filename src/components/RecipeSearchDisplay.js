@@ -79,6 +79,7 @@ const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe, recipeListPag
                                 </Button>
                             </CardContent>
                         </Card>
+                        </Card>
                         </Grid>
                         )
                     })}

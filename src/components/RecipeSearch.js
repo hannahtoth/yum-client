@@ -85,7 +85,7 @@ const RecipeSearch = ({newRecipe, setNewRecipe} ) => {
         <>
 
         <h2>Search By Ingredient</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmitAddIngredient}>
 
             <TextField
                 id="ingredient-input"
