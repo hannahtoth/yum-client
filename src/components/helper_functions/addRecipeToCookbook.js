@@ -1,5 +1,5 @@
 
-        const addRecipeToCookbook = async (recipeObject, setNewRecipe) => {
+        const addRecipeToCookbook = async (recipeObject, setNewRecipe, sessionToken) => {
             
             let {label, image, source, url, ingredientLines} = recipeObject.recipe;
             let ingredientListString = ingredientLines.join(', ').substring(0,254);
