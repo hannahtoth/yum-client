@@ -5,7 +5,7 @@ import addRecipeToCookbook from './helper_functions/addRecipeToCookbook';
 
 
 
-const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe, recipeListPage}) => {
+const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe, recipeListPage, sessionToken}) => {
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -29,7 +29,7 @@ const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe, recipeListPag
         
         console.log(recipeObject)
         
-        addRecipeToCookbook(recipeObject, setNewRecipe)
+        addRecipeToCookbook(recipeObject, setNewRecipe, sessionToken)
 
     }
 
@@ -40,7 +40,7 @@ const RecipeSearchDisplay = ({recipeList, newRecipe, setNewRecipe, recipeListPag
 
                 {recipeList.slice(0,9).map((recipeObject, index) => {
                     return (
-                        <Grid key={index} item xs={6} md={4} xl={3} >
+                        <Grid key={index} item xs={12} sm={6} md={4} xl={3} >
                         <Card style={{
                         color: "#476040",
                             }}>

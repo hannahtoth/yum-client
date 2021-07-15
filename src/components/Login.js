@@ -8,7 +8,7 @@ const Login = (props) => {
         <>
             {
             props.loggedIn ? 
-            <AppLoggedIn /> :
+            <AppLoggedIn sessionToken={props.sessionToken} /> :
                 <form>
                     <h1>Login</h1>
                     <label>Username: </label>
