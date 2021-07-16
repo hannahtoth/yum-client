@@ -1,5 +1,4 @@
 import React from "react";
-import { PinDropSharp } from "@material-ui/icons";
 import { useState, useEffect } from "react";
 import Login from "./Login";
 import Signup from "./Signup";
@@ -17,7 +16,6 @@ const Portal = () => {
     if (localStorage.getItem("token")) {
       setSessionToken(localStorage.getItem("token"));
       setLoggedIn(true);
-      console.log(localStorage);
     }
   }, []);
 
@@ -28,14 +26,11 @@ const Portal = () => {
   const updateToken = (newToken) => {
     localStorage.setItem("token", newToken);
     setSessionToken(newToken);
-    console.log(newToken);
     newToken ? setLoggedIn(true) : setLoggedIn(false);
-    console.log(sessionToken);
   };
 
   const loginForm = (e) => {
     e.preventDefault();
-    console.log(`${username}, ${password}`);
     fetch("http://localhost:3000/user/login", {
       method: "POST",
       body: JSON.stringify({
@@ -53,7 +48,6 @@ const Portal = () => {
 
   const signUpForm = (e) => {
     e.preventDefault();
-    console.log(`${username}, ${password}`);
     fetch("http://localhost:3000/user/register", {
       method: "POST",
       body: JSON.stringify({
@@ -69,9 +63,17 @@ const Portal = () => {
       });
   };
 
+  const clearToken = (e) => {
+      e.preventDefault()
+      localStorage.clear()
+      setSessionToken('')
+      setLoggedIn(false)
+  }
+
+
   return (
     <>
- <Navbar />
+ <Navbar loggedIn={loggedIn} clearToken={clearToken} />
 
       {showLogin ? (
         <Login

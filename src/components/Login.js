@@ -1,8 +1,6 @@
-import { useState } from 'react'
-import AppLoggedIn from './AppLoggedIn'
+import AppLoggedIn from "./AppLoggedIn";
 
 const Login = (props) => {
-
 
     return (
         <>

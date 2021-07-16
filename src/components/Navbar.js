@@ -9,7 +9,7 @@ import {
   Link,
 } from "../materialuiexports";
 
-const Navbar = ({}) => {
+const Navbar = (props) => {
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -59,16 +59,17 @@ const Navbar = ({}) => {
             }}
             className={classes.title}
           ></Typography>
-
+{props.loggedIn ?
           <Button
             color="inherit"
             style={{
               color: "#D2DAC3",
             }}
             className={classes.button}
+            onClick={props.clearToken}
           >
             Logout
-          </Button>
+          </Button> : <></>}
         </Toolbar>
       </AppBar>
     </div>
