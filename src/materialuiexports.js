@@ -17,7 +17,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import  Toolbar  from '@material-ui/core/Toolbar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 export { 
-    TextField, AddCircleOutlineTwoToneIcon, Button, Pagination, Chip, CardMedia, Card, CardContent, Typography, Grid, Container, Link, AppBar, Avatar, IconButton, Toolbar, MenuIcon, Menu, MenuItem
+    TextField, AddCircleOutlineTwoToneIcon, Button, Pagination, Chip, CardMedia, Card, CardContent, Typography, Grid, Container, Link, AppBar, Avatar, IconButton, Toolbar, MenuIcon, Menu, MenuItem, Accordion, AccordionSummary, AccordionDetails, ExpandMoreIcon 
      }

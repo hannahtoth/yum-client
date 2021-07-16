@@ -1,69 +1,76 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 
-import { Button, Typography, AppBar, Toolbar, IconButton, MenuIcon, Avatar, MenuItem, Menu} from '../materialuiexports';
-
+import {
+  Button,
+  Typography,
+  AppBar,
+  Toolbar,
+  IconButton,
+  MenuIcon,
+  Avatar,
+  MenuItem,
+  Menu,
+} from "../materialuiexports";
 
 const Navbar = ({}) => {
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
 
+    title: {
+      flexGrow: 1,
+      padding: 2,
+      marginTop: 85,
+      textAlign: "left",
+    },
 
+    logo: {
+      maxWidth: 60,
+    },
 
-const useStyles = makeStyles((theme) => ({
-        root: {
-          flexGrow: 1,
-        },
-        
-        title: {
-            flexGrow: 1,
-            padding: 2,
-            marginTop: 85,
-            textAlign: 'left'
-        
-         
-        },
+    button: {
+      marginTop: 60,
+    },
+  }));
 
-        logo: {
-            maxWidth: 60,
+  const classes = useStyles();
 
-           
-          },
+  return (
+    <div className={classes.root}>
+      <AppBar
+        position="static"
+        style={{
+          backgroundColor: "#789174",
+        }}
+      >
+        <Toolbar>
+          <img src="yumLogo.png" alt="logo" className={classes.logo} />
 
-          button: {
-              
-              marginTop: 60,
-          }
+          <Typography
+            variant="h8"
+            style={{
+              color: "white",
+            }}
+            className={classes.title}
+          >
+            where recipes find you
+          </Typography>
 
-      }));
+          <Button
+            color="inherit"
+            style={{
+              color: "white",
+            }}
+            className={classes.button}
+          >
+            Login
+          </Button>
+        </Toolbar>
+      </AppBar>
+    </div>
+  );
+};
 
-     
-      
-        const classes = useStyles();
-      
-        return (
-          <div className={classes.root}>
-            <AppBar position="static" style={{
-              backgroundColor: "#789174"
-            }}>
-              <Toolbar>
-                <img src='yumLogo.png' alt='logo' className={classes.logo} />
-                
-               
-                <Typography variant="h8"
-                
-                style={{
-                    color: 'white'
-                }} className={classes.title}>
-                where recipes find you
-                </Typography>
-            
-                <Button color="inherit" 
-                style={{
-                    color: 'white'
-                }} className={classes.button}>Login</Button>
-              </Toolbar>
-            </AppBar>
-          </div>
-        );
-}
-
-        export default Navbar;
+export default Navbar;

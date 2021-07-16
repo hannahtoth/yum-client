@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import RecipeSearch from './RecipeSearch';
-import RecipeIndex from './RecipeIndex';
+import React, { useState, useEffect } from "react";
+import RecipeSearch from "./RecipeSearch";
+import RecipeIndex from "./RecipeIndex";
 
 const AppLoggedIn = (props) => {
   const [newRecipe, setNewRecipe] = useState(false);
@@ -11,13 +11,17 @@ const AppLoggedIn = (props) => {
       //Do the things if new recipe is set to true on state change.
     }
     setNewRecipe(false);
-  },[newRecipe]);
+  }, [newRecipe]);
 
   return (
     <>
-      <RecipeSearch newRecipe={newRecipe} setNewRecipe={setNewRecipe} sessionToken={props.sessionToken} />
+      <RecipeSearch
+        newRecipe={newRecipe}
+        setNewRecipe={setNewRecipe}
+        sessionToken={props.sessionToken}
+      />
 
-      <RecipeIndex sessionToken={props.sessionToken} />
+      <RecipeIndex newRecipe={newRecipe} sessionToken={props.sessionToken} />
     </>
   );
 };
