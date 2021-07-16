@@ -16,6 +16,7 @@ import {
   ExpandMoreIcon,
 } from "../materialuiexports";
 
+
 const RecipeIndex = (props) => {
   const [recipes, setRecipes] = useState([]);
   const [renderTrigger, setRenderTrigger] = useState(false);
@@ -140,7 +141,16 @@ const RecipeIndex = (props) => {
   return (
     <Container maxWidth="lg">
       <h1>Cook Book</h1>
-      <Button onClick={fetchHelper} variant="contained" color="primary">
+      <Button
+        onClick={fetchHelper}
+        variant="contained"
+        size="medium"
+        style={{
+          backgroundColor: "#476040",
+          color: "white",
+          margin: 20,
+        }}
+      >
         Load my cookbook
       </Button>
       <Grid container spacing={3}>

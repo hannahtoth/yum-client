@@ -4,7 +4,7 @@ import AppLoggedIn from "./AppLoggedIn";
 const Signup = (props) => {
   const [confirmPassword, setConfirmPassword] = useState();
   const [failMessage, setFailMessage] = useState("");
-
+  
   const confirmAndSend = (e) => {
     if (props.password === confirmPassword) {
       props.signUpForm(e);
@@ -43,10 +43,22 @@ const Signup = (props) => {
           ></input>
           {console.log(confirmPassword)}
           <br />
-          <a onClick={props.toggle}>Already have an account?</a>
-          <button type="button" onClick={confirmAndSend}>
+
+          <button
+            type="button"
+            variant="contained"
+            size="medium"
+            style={{
+              backgroundColor: "#476040",
+              color: "white",
+              margin: 10,
+            }}
+            onClick={confirmAndSend}
+          >
             Sign Up
           </button>
+          <br />
+          <a onClick={props.toggle}>Already have an account?</a>
         </form>
       )}{" "}
     </>

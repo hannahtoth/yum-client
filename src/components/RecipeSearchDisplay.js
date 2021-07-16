@@ -47,6 +47,7 @@ const RecipeSearchDisplay = ({
     e.target.innerText = "ADDED TO COOKBOOK!";
   };
 
+
   return (
     <Container maxWidth="lg">
       <h2>Recipe Display</h2>

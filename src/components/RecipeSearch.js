@@ -3,14 +3,14 @@ import { useRef, useState, useEffect } from "react";
 import RecipeSearchDisplay from "./RecipeSearchDisplay";
 import IngredientsListDisplay from "./IngredientsListDisplay";
 import RecipeSearchPageButtons from "./RecipeSearchPageButtons";
+
 //material-ui imports
 import {
   TextField,
   AddCircleOutlineTwoToneIcon,
-  Button,
+  Button
 } from "../materialuiexports";
 
-//Edamam API Info
 // Application ID
 // 9c141499
 // Application Key
@@ -18,15 +18,18 @@ import {
 // Link for documentation:
 // https://developer.edamam.com/edamam-docs-recipe-api
 
+
 const RecipeSearch = ({ newRecipe, setNewRecipe, sessionToken }) => {
   const baseUrl = `https://api.edamam.com/api/recipes/v2`;
   const appId = `9c141499`;
   const appKey = `d64c51d6958faa1ca82627551b9e8824`;
   const fields = `&field=label&field=image&field=source&field=url&field=ingredientLines&field=ingredients&field=cuisineType`;
+
   const currentFetchUrl = useRef("");
   const nextFetchUrl = useRef("");
   const previousFetchUrls = useRef([]);
   const recipeListPage = useRef(0);
+
 
   const ingredientInput = useRef("");
   const ingredientListArray = useRef([]);
@@ -62,6 +65,7 @@ const RecipeSearch = ({ newRecipe, setNewRecipe, sessionToken }) => {
       ingredientInput.current,
     ];
     ingredientListString.current = ingredientListArray.current.join();
+
     currentFetchUrl.current = `${baseUrl}?type=public&q=${ingredientListString.current}&app_id=${appId}&app_key=${appKey}${fields}`;
     recipeListPage.current = 1;
     console.log(`page: ${recipeListPage.current}`);
@@ -69,6 +73,7 @@ const RecipeSearch = ({ newRecipe, setNewRecipe, sessionToken }) => {
   };
 
   const removeIngredientFromList = () => {
+
     currentFetchUrl.current = `${baseUrl}?type=public&q=${ingredientListString.current}&app_id=${appId}&app_key=${appKey}${fields}`;
     setRecipeFetchToggle(true);
   };
@@ -87,7 +92,9 @@ const RecipeSearch = ({ newRecipe, setNewRecipe, sessionToken }) => {
   return (
     <>
       <h2>Search By Ingredient</h2>
+
       <form onSubmit={handleSubmitAddIngredient}>
+
         <TextField
           id="ingredient-input"
           label="Add an Ingredient"
