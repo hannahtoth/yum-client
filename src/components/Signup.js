@@ -1,11 +1,10 @@
 import { useState } from "react";
-
 import AppLoggedIn from "./AppLoggedIn";
 
 const Signup = (props) => {
   const [confirmPassword, setConfirmPassword] = useState();
   const [failMessage, setFailMessage] = useState("");
-
+  
   const confirmAndSend = (e) => {
     if (props.password === confirmPassword) {
       props.signUpForm(e);
@@ -44,6 +43,7 @@ const Signup = (props) => {
           ></input>
           {console.log(confirmPassword)}
           <br />
+
           <button
             type="button"
             variant="contained"

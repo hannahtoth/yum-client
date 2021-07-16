@@ -43,6 +43,8 @@ const RecipeSearchDisplay = ({
     console.log(recipeObject);
 
     addRecipeToCookbook(recipeObject, setNewRecipe, sessionToken);
+
+    e.target.innerText = "ADDED TO COOKBOOK!";
   };
 
 
@@ -94,7 +96,6 @@ const RecipeSearchDisplay = ({
                   </CardContent>
                 </Card>
               </Card>
-
             </Grid>
           );
         })}

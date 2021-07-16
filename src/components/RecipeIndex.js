@@ -1,7 +1,5 @@
-
-import React, { useState, useEffect, Fragment, useRef } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-
+import React, { useState, useEffect, Fragment, useRef } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
   CardMedia,
@@ -11,9 +9,12 @@ import {
   Grid,
   Container,
   Link,
-
-  TextField
-} from '../materialuiexports';
+  TextField,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  ExpandMoreIcon,
+} from "../materialuiexports";
 
 
 const RecipeIndex = (props) => {
@@ -30,26 +31,24 @@ const RecipeIndex = (props) => {
     })
       .then((res) => res.json())
       .then((jsonData) => {
-        jsonData.sort((a,b) => {
-          return a.id - b.id
-        })
+        jsonData.sort((a, b) => {
+          return a.id - b.id;
+        });
         setRecipes(jsonData);
         console.log(jsonData);
       })
       .catch((err) => console.log(err));
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchRecipes();
-  },[renderTrigger])
+  }, [renderTrigger, props.newRecipe]);
 
   //Fetch recipes
   const fetchHelper = (e) => {
     e.preventDefault();
-
-    console.log('fetch recipes started');
-    setRenderTrigger(renderTrigger=>!renderTrigger)
-
+    console.log("fetch recipes started");
+    setRenderTrigger((renderTrigger) => !renderTrigger);
   };
 
   //Delete recipe
@@ -87,47 +86,55 @@ const RecipeIndex = (props) => {
   //Save Notes
   const saveNotes = async (recipeId, updatedNotes) => {
     try {
-      let response = await fetch(`http://localhost:3000/cookbook/update/${recipeId}`, {
-        method:'PUT',
-        body: JSON.stringify({
-          cookbook: {
-            notes: updatedNotes
-          }}),
-        headers: new Headers({
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${props.sessionToken}`
-        })
-      });
+      let response = await fetch(
+        `http://localhost:3000/cookbook/update/${recipeId}`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            cookbook: {
+              notes: updatedNotes,
+            },
+          }),
+          headers: new Headers({
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${props.sessionToken}`,
+          }),
+        }
+      );
     } catch (err) {
-      console.log(`Error: ${err}`)
+      console.log(`Error: ${err}`);
     }
-
-  }
+  };
 
   const handleSaveNotes = async (e) => {
-    e.preventDefault()
-    let recipeId = e.target[2].getAttribute('recipeid-data')
+    e.preventDefault();
+    console.log(e.target[2]);
+    let recipeId = e.target[2].getAttribute("recipeid-data");
     let updatedNotes = e.target[0].value;
     await saveNotes(recipeId, updatedNotes);
     fetchRecipes();
-  }
+  };
 
   const useStyles = makeStyles((theme) => ({
     root: {
-        maxWidth: 345
+      maxWidth: 345,
     },
-
     media: {
-        height: "100%",
-        paddingTop: '56.25%'
+      height: "100%",
+      paddingTop: "56.25%",
     },
     notes: {
-      margin: '15px 0px 15px 0px',
-      '& .MuiTextField-root':{
-        width: '100%'
+      margin: "15px 0px 15px 0px",
+      "& .MuiTextField-root": {
+        width: "100%",
       },
-    }
-  }))
+    },
+
+    accHeading: {
+      alignItems: "center",
+      justifyContent: "center",
+    },
+  }));
 
   const classes = useStyles();
 
@@ -149,60 +156,75 @@ const RecipeIndex = (props) => {
       <Grid container spacing={3}>
         {recipes.map((recipe) => {
           return (
-            <Grid key={`cb-${recipe.id}`} item item xs={12} sm={6} md={4} xl={3} >
-            <Card>
-            <CardContent>
-                <Typography>
-                {recipe.recipeName}
-                </Typography>
-            </CardContent>
-            <CardMedia
-                className={classes.media}
-                image={recipe.image}
-                title={recipe.recipeName}
-            />
-            <CardContent>
-              <p>{recipe.ingredients}</p>
-              <a href={recipe.url} target="blank" alt="">
-                View Full Recipe at {recipe.source}
-              </a>
-              <form onSubmit={handleSaveNotes} className={classes.notes} noValidate autoComplete="off" >
-                
-                  <TextField
-                    id="outlined-multiline-static"
-                    label="Notes"
-                    multiline
-                    rows={4}
-                    defaultValue={recipe.notes || "Enter Your Notes"}
-                    variant="outlined"
-                  />
+            <Grid key={`cb-${recipe.id}`} item xs={12} sm={6} md={4} xl={3}>
+              <Card>
+                <CardContent>
+                  <Typography>{recipe.recipeName}</Typography>
+                </CardContent>
+                <CardMedia
+                  className={classes.media}
+                  image={recipe.image}
+                  title={recipe.recipeName}
+                />
+                <CardContent>
+                  <Accordion>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography className={classes.accHeading}>
+                        View Ingredients
+                      </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography>{recipe.ingredients}</Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                  <br />
+                  <a href={recipe.url} target="blank" alt="">
+                    View Full Recipe at {recipe.source}
+                  </a>
+
+                  <form
+                    onSubmit={handleSaveNotes}
+                    className={classes.notes}
+                    noValidate
+                    autoComplete="off"
+                  >
+                    <TextField
+                      id="outlined-multiline-static"
+                      label="Notes"
+                      multiline
+                      rows={4}
+                      defaultValue={recipe.notes || "Enter Your Notes"}
+                      variant="outlined"
+                    />
+
+                    <Button
+                      type="submit"
+                      recipeid-data={recipe.id}
+                      variant="outlined"
+                      color="primary"
+                    >
+                      Save Notes
+                    </Button>
+                  </form>
+                </CardContent>
 
                 <Button
-                    type="submit"
-                    recipeid-data={recipe.id}
-                    variant="outlined"
-                    color="primary"
-                  >
-                    Save Notes
-                  </Button>
-                
-              </form>
-            </CardContent>
-
-              <Button
-                onClick={deleteHelper}
-                recipeid-data={recipe.id}
-                variant="contained"
-                color="primary"
-              >
-                Remove Recipe
-              </Button>
-            </Card>
+                  onClick={deleteHelper}
+                  recipeid-data={recipe.id}
+                  variant="contained"
+                  color="primary"
+                >
+                  Remove Recipe
+                </Button>
+              </Card>
             </Grid>
           );
         })}
       </Grid>
-
     </Container>
   );
 };
