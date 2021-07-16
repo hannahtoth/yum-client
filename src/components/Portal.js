@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Login from "./Login";
 import Signup from "./Signup";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const Portal = () => {
   const [showLogin, setShowLogin] = useState(true);
@@ -69,9 +70,10 @@ const Portal = () => {
       setLoggedIn(false)
   }
 
+
   return (
     <>
-      <Navbar loggedIn={loggedIn} clearToken={clearToken} />
+ <Navbar loggedIn={loggedIn} clearToken={clearToken} />
 
       {showLogin ? (
         <Login
@@ -95,6 +97,8 @@ const Portal = () => {
           sessionToken={sessionToken}
         />
       )}
+
+<Footer />
     </>
   );
 };

@@ -1,21 +1,20 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+
 import {
   Button,
   Typography,
   AppBar,
   Toolbar,
-  IconButton,
-  MenuIcon,
-  Avatar,
-  MenuItem,
-  Menu,
+  Link,
 } from "../materialuiexports";
 
 const Navbar = (props) => {
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
+      height: "100",
+      overflow: "auto",
     },
 
     title: {
@@ -26,7 +25,12 @@ const Navbar = (props) => {
     },
 
     logo: {
-      maxWidth: 60,
+      maxWidth: 200,
+    },
+
+    tagline: {
+      maxWidth: 100,
+      maxHeight: 100,
     },
 
     button: {
@@ -34,20 +38,19 @@ const Navbar = (props) => {
     },
   }));
 
-
-
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
       <AppBar
-        position="static"
+        position="sticky"
         style={{
           backgroundColor: "#789174",
         }}
       >
         <Toolbar>
-          <img src="yumLogo.png" alt="logo" className={classes.logo} />
+          <img src="YumLogo.png" alt="tagline" className={classes.tagline} />
+          <img src="yum-tagline.png" alt="logo" className={classes.logo} />
 
           <Typography
             variant="h8"
@@ -55,14 +58,12 @@ const Navbar = (props) => {
               color: "white",
             }}
             className={classes.title}
-          >
-            where recipes find you
-          </Typography>
-          {props.loggedIn ? 
+          ></Typography>
+{props.loggedIn ?
           <Button
             color="inherit"
             style={{
-              color: "white",
+              color: "#D2DAC3",
             }}
             className={classes.button}
             onClick={props.clearToken}
