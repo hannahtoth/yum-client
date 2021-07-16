@@ -18,9 +18,20 @@ const Login = (props) => {
                     <label>Password:</label>
                     <input type="password" onChange={e => props.setPassword(e.target.value)}></input>
                     <br />
+                    
 
+                    <button type="button" onClick={props.loginForm} 
+                 
+                    variant="contained"
+                    size="large"
+                    style={{
+                    backgroundColor:"#476040",
+                    color: "white",
+                    margin: 10,}}
+                        >Login</button>
+                    <br />
                     <a onClick={props.toggle}>Don't have an account?</a>
-                    <button type="button" onClick={props.loginForm}>Login</button>
+                   
                 </form>}
 
         </>

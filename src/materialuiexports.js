@@ -17,7 +17,9 @@ import MenuIcon from '@material-ui/icons/Menu';
 import  Toolbar  from '@material-ui/core/Toolbar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Tooltip from '@material-ui/core/Tooltip';
+
 
 export { 
-    TextField, AddCircleOutlineTwoToneIcon, Button, Pagination, Chip, CardMedia, Card, CardContent, Typography, Grid, Container, Link, AppBar, Avatar, IconButton, Toolbar, MenuIcon, Menu, MenuItem
+    TextField, AddCircleOutlineTwoToneIcon, Button, Pagination, Chip, CardMedia, Card, CardContent, Grid, Container, Link, AppBar, Avatar, IconButton, Toolbar, MenuIcon, Menu, MenuItem, Typography, Tooltip,
      }
