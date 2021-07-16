@@ -1,5 +1,8 @@
-    let {label, image, source, url, ingredientLines} = recipeObject.recipe;
-    let ingredientListString = ingredientLines.join(', ');
+
+    const addRecipeToCookbook = async (recipeObject, setNewRecipe, sessionToken) => {
+        let {label, image, source, url, ingredientLines} = recipeObject.recipe;
+        let ingredientListString = ingredientLines.join(', ');
+
     try {
         let results = await fetch('http://localhost:3000/cookbook/create', {
                 method: 'POST',
