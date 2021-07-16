@@ -45,6 +45,7 @@ const RecipeSearchDisplay = ({
     addRecipeToCookbook(recipeObject, setNewRecipe, sessionToken);
   };
 
+
   return (
     <Container maxWidth="lg">
       <h2>Recipe Display</h2>
@@ -93,6 +94,7 @@ const RecipeSearchDisplay = ({
                   </CardContent>
                 </Card>
               </Card>
+
             </Grid>
           );
         })}
