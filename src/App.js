@@ -1,14 +1,11 @@
-import {useState} from 'react';
-import './App.css';
-import AppLoggedIn from './components/AppLoggedIn';
+import "./App.css";
+import Portal from "./components/Portal";
+
 
 function App() {
-
-  const [loggedIn, setLoggedIn] = useState(true)
-  
   return (
     <div className="App">
-      {loggedIn ? <AppLoggedIn /> : <></>}
+      <Portal />
     </div>
   );
 }

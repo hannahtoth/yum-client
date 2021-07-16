@@ -3,7 +3,7 @@ import React from "react";
 //material-ui imports
 import { Chip } from "../materialuiexports";
 
-const IngredientsListDisplay = ({
+const RecipeSearchIngredientList = ({
   ingredientListArray,
   ingredientListString,
   removeIngredientFromList,
@@ -34,13 +34,11 @@ const IngredientsListDisplay = ({
         ingredient={ingredient}
         label={ingredient}
         onDelete={handleDelete}
+        color="primary"
         variant="outlined"
-        style={{
-          color: "#476040",
-        }}
       />
     );
   });
 };
 
-export default IngredientsListDisplay;
+export default RecipeSearchIngredientList;

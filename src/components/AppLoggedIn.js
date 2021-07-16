@@ -1,24 +1,29 @@
-import React, {useState,useEffect} from 'react';
-import RecipeSearch from './RecipeSearch';
+import React, { useState, useEffect } from "react";
+import RecipeSearch from "./RecipeSearch";
+import RecipeIndex from "./RecipeIndex";
 
-const AppLoggedIn = () => {
+const AppLoggedIn = (props) => {
+  const [newRecipe, setNewRecipe] = useState(false);
 
-    const [newRecipe, setNewRecipe] = useState(false);
+  useEffect(() => {
+    if (newRecipe) {
+      console.log(`Add New Recipe Triggered`);
+      //Do the things if new recipe is set to true on state change.
+    }
+    setNewRecipe(false);
+  }, [newRecipe]);
 
-    useEffect(() => {
-        if (newRecipe){
-            console.log(`Add New Recipe Triggered`)
-            //Do the things if new recipe is set to true on state change.
-        }
-        setNewRecipe(false)
-        
-    })
+  return (
+    <>
+      <RecipeSearch
+        newRecipe={newRecipe}
+        setNewRecipe={setNewRecipe}
+        sessionToken={props.sessionToken}
+      />
 
-    return(
-        <>
-        <RecipeSearch newRecipe={newRecipe} setNewRecipe={setNewRecipe} />
-        </>
-    )
-}
+      <RecipeIndex newRecipe={newRecipe} sessionToken={props.sessionToken} />
+    </>
+  );
+};
 
-export default AppLoggedIn
+export default AppLoggedIn;
