@@ -1,12 +1,15 @@
-import React from 'react';
-import {useRef, useState, useEffect} from 'react';
-import RecipeSearchDisplay from './RecipeSearchDisplay';
-import IngredientsListDisplay from './IngredientsListDisplay';
-import RecipeSearchPageButtons from './RecipeSearchPageButtons';
+import React from "react";
+import { useRef, useState, useEffect } from "react";
+import RecipeSearchDisplay from "./RecipeSearchDisplay";
+import IngredientsListDisplay from "./IngredientsListDisplay";
 //material-ui imports
-import { TextField, AddCircleOutlineTwoToneIcon, Button} from '../materialuiexports';
+import {
+  TextField,
+  AddCircleOutlineTwoToneIcon,
+  Button,
+  Pagination,
+} from "../materialuiexports";
 
-//Edamam API Info
 // Application ID
 // 9c141499
 // Application Key
@@ -14,134 +17,148 @@ import { TextField, AddCircleOutlineTwoToneIcon, Button} from '../materialuiexpo
 // Link for documentation:
 // https://developer.edamam.com/edamam-docs-recipe-api
 
+//Pagination under construction
+// const RecipeSearchDisplayPages = ({recipeListPageCurr, recipeListPageTotal, handlePageChange}) => {
+//     return (
+//         <Pagination
+//             count={recipeListPageTotal}
+//             page={recipeListPageCurr}
+//             color="primary"
+//             onChange={handlePageChange}
+//             boundaryCount={1}
+//         />
+//     )
+// }
 
+const RecipeSearch = ({ newRecipe, setNewRecipe }) => {
+  const baseUrl = `https://api.edamam.com/api/recipes/v2`;
+  const appId = `9c141499`;
+  const appKey = `d64c51d6958faa1ca82627551b9e8824`;
+  const fields = `&field=label&field=image&field=source&field=url&field=ingredientLines&field=ingredients&field=cuisineType`;
 
-const RecipeSearch = ({newRecipe, setNewRecipe, sessionToken} ) => {
-    const baseUrl = `https://api.edamam.com/api/recipes/v2`;
-    const appId = `9c141499`;
-    const appKey = `d64c51d6958faa1ca82627551b9e8824`;
-    const fields = `&field=label&field=image&field=source&field=url&field=ingredientLines&field=ingredients&field=cuisineType`
-    const currentFetchUrl = useRef('');
-    const nextFetchUrl = useRef('');
-    const previousFetchUrls = useRef([]);
-    const recipeListPage = useRef(0);
+  const ingredientInput = useRef("");
+  const ingredientListArray = useRef([]);
+  const ingredientListString = useRef("");
+  const [recipeFetchToggle, setRecipeFetchToggle] = useState(false);
 
-    const ingredientInput = useRef('');
-    const ingredientListArray = useRef([]);
-    const ingredientListString = useRef('');
-    const [recipeFetchToggle, setRecipeFetchToggle] = useState(false);
-    const [recipeList, setRecipeList] = useState([]);
+  const [recipeJson, setRecipeJson] = useState(null);
+  const [recipeList, setRecipeList] = useState([]);
+  const [recipeListPageCurr, setRecipeListPageCurr] = useState(null);
+  const [recipeListPageTotal, setRecipeListPageTotal] = useState(null);
 
-    useEffect(() =>{
-        if (recipeFetchToggle) {
-            recipeQuery()
-        }
-    },[recipeFetchToggle])
+  const handlePageChange = (event, value) => {
+    console.log(event, value);
+    setRecipeListPageCurr(value);
+    setRecipeFetchToggle(true);
+  };
 
-
-    const recipeQuery = async () => {
-            try {
-                
-                let results = await fetch (currentFetchUrl.current);
-                let jsonData = await results.json(); 
-                let recipes = await jsonData.hits;
-                setRecipeList(await recipes);
-                console.log(jsonData)
-                
-                nextFetchUrl.current = await jsonData['_links']['next']['href']
-
-                setRecipeFetchToggle(false)
-            } catch (err) {
-                console.log(`Error: ${err}`)
-            }
+  useEffect(() => {
+    if (recipeFetchToggle) {
+      recipeQuery();
     }
+  }, [recipeFetchToggle, recipeListPageCurr]);
 
-    const addIngredientToList = () => {
-        ingredientListArray.current = [...ingredientListArray.current, ingredientInput.current];
-        ingredientListString.current = ingredientListArray.current.join();
-        currentFetchUrl.current = `${baseUrl}?type=public&q=${ingredientListString.current}&app_id=${appId}&app_key=${appKey}${fields}`;
-        recipeListPage.current = 1;
-        console.log(`page: ${recipeListPage.current}`)
-        setRecipeFetchToggle(true);
+  const recipeQuery = async () => {
+    let fetchUrl = `${baseUrl}?type=public&q=${ingredientListString.current}&app_id=${appId}&app_key=${appKey}${fields}`;
+    if (recipeListPageCurr !== null && recipeListPageCurr > 1) {
+      console.log(recipeJson["_links"]["next"]["href"]);
+      fetchUrl = recipeJson["_links"]["next"]["href"];
     }
-
-    const removeIngredientFromList = () => {
-        currentFetchUrl.current = `${baseUrl}?type=public&q=${ingredientListString.current}&app_id=${appId}&app_key=${appKey}${fields}`;
-        setRecipeFetchToggle(true)
+    try {
+      let results = await fetch(fetchUrl);
+      let jsonData = await results.json();
+      let recipes = await jsonData.hits;
+      setRecipeList(await recipes);
+      setRecipeJson(await jsonData);
+      // console.log(jsonData)
+      let totalPages = jsonData.count;
+      setRecipeListPageTotal(Math.ceil(totalPages / 10));
+      setRecipeFetchToggle(false);
+    } catch (err) {
+      console.log(`Error: ${err}`);
     }
+  };
 
-    const handleSubmitAddIngredient = (e) => {
-        e.preventDefault();
-        addIngredientToList();
-        let inputField = document.getElementById('ingredient-input');
-        inputField.value = '';
-    }
+  const addIngredientToList = () => {
+    ingredientListArray.current = [
+      ...ingredientListArray.current,
+      ingredientInput.current,
+    ];
+    ingredientListString.current = ingredientListArray.current.join();
+    console.log(ingredientListArray.current);
+    console.log(ingredientListString.current);
+    setRecipeFetchToggle(true);
+  };
 
-    const handleIngredientInput = (e) => {
-        ingredientInput.current = e.target.value;
-    }
+  const removeIngredientFromList = () => {
+    setRecipeFetchToggle(true);
+  };
 
-    return (
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addIngredientToList();
+    let inputField = document.getElementById("ingredient-input");
+    inputField.value = "";
+    console.log("submitted");
+  };
+
+  const handleIngredientInput = (e) => {
+    ingredientInput.current = e.target.value;
+  };
+
+  return (
+    <>
+      <h2>Search By Ingredient</h2>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          id="ingredient-input"
+          label="Add an Ingredient"
+          variant="outlined"
+          onChange={handleIngredientInput}
+        />
+        <br />
+        <Button
+          type="submit"
+          variant="contained"
+          size="medium"
+          style={{
+            backgroundColor: "#476040",
+            color: "white",
+            margin: 20,
+          }}
+          // className={classes.button}
+          startIcon={<AddCircleOutlineTwoToneIcon />}
+        >
+          {" "}
+          Add Ingredient
+        </Button>
+      </form>
+      <IngredientsListDisplay
+        ingredientListArray={ingredientListArray}
+        ingredientListString={ingredientListString}
+        removeIngredientFromList={removeIngredientFromList}
+      />
+
+      {recipeList.length > 0 ? (
         <>
-
-        <h2>Search By Ingredient</h2>
-        <form onSubmit={handleSubmitAddIngredient}>
-
-            <TextField
-                id="ingredient-input"
-                label="Add an Ingredient"
-                variant="outlined" 
-                onChange={handleIngredientInput}
-            />
-            <br/>
-            <Button
-                type="submit"
-                variant="contained"
-                size="medium"
-                style={{
-                    backgroundColor:"#476040",
-                    color: "white",
-                    margin: 20,
-                }}
-                // className={classes.button}
-                startIcon={<AddCircleOutlineTwoToneIcon />}
-            > Add Ingredient
-            </Button>
-        </form>
-        <IngredientsListDisplay
-            ingredientListArray={ingredientListArray}
-            ingredientListString={ingredientListString}
-            removeIngredientFromList={removeIngredientFromList}
-            />
-
-        {recipeList.length>0
-            ?   <>
-                <div>
-                    <RecipeSearchPageButtons
-                        recipeListPage={recipeListPage}
-                        currentFetchUrl={currentFetchUrl}
-                        nextFetchUrl={nextFetchUrl}
-                        previousFetchUrls={previousFetchUrls}
-                        setRecipeFetchToggle={setRecipeFetchToggle}
-                    /> 
-                </div>
-                <div>
-                    <RecipeSearchDisplay
-                        recipeList={recipeList}
-                        newRecipe={newRecipe}
-                        setNewRecipe={setNewRecipe}
-                        recipeListPage={recipeListPage}
-                        sessionToken={sessionToken}
-                    />
-                </div>
-                </>
-            :   ingredientListArray.current.length === 0
-            ?   "Add an ingredient to find recipes"
-            :   "No recipes found"
-        }
-
+          {/* <RecipeSearchDisplayPages
+                    recipeListPageCurr={recipeListPageCurr}
+                    recipeListPageTotal={recipeListPageTotal}
+                    handlePageChange={handlePageChange}
+                />  */}
+          <RecipeSearchDisplay
+            recipeList={recipeList}
+            newRecipe={newRecipe}
+            setNewRecipe={setNewRecipe}
+          />
         </>
-    )
-}
+      ) : ingredientListArray.current.length === 0 ? (
+        "Add an ingredient to find recipes"
+      ) : (
+        "No recipes found"
+      )}
+    </>
+  );
+};
 
-export default RecipeSearch
+export default RecipeSearch;

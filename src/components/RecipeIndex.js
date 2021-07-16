@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from "react";
 import {
   Button,
   CardMedia,
@@ -8,16 +8,16 @@ import {
   Grid,
   Container,
   Link,
-} from '../materialuiexports';
+} from "../materialuiexports";
 
 const RecipeIndex = (props) => {
   const [recipes, setRecipes] = useState([]);
 
   const fetchRecipes = () => {
-    fetch('http://localhost:3000/cookbook/getall', {
-      method: 'GET',
+    fetch("http://localhost:3000/cookbook/getall", {
+      method: "GET",
       headers: new Headers({
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${props.sessionToken}`,
       }),
     })
@@ -31,7 +31,7 @@ const RecipeIndex = (props) => {
   //Fetch recipes
   const fetchHelper = (e) => {
     e.preventDefault();
-    console.log('fetch recipes started');
+    console.log("fetch recipes started");
     fetchRecipes();
   };
   //Delete recipe
@@ -40,9 +40,9 @@ const RecipeIndex = (props) => {
       let response = await fetch(
         `http://localhost:3000/cookbook/delete/${recipeId}`,
         {
-          method: 'DELETE',
+          method: "DELETE",
           headers: new Headers({
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             Authorization: `Bearer ${props.sessionToken}`,
           }),
         }
@@ -56,10 +56,10 @@ const RecipeIndex = (props) => {
 
   const deleteHelper = (e) => {
     e.preventDefault();
-    console.log('recipe deleted');
-    console.log(e.target)
-    let clickedButton = e.target.closest('button');
-    let recipeToRemove = clickedButton.getAttribute('recipeid-data');
+    console.log("recipe deleted");
+    console.log(e.target);
+    let clickedButton = e.target.closest("button");
+    let recipeToRemove = clickedButton.getAttribute("recipeid-data");
     console.log(recipeToRemove);
 
     deleteRecipe(recipeToRemove);
@@ -68,7 +68,16 @@ const RecipeIndex = (props) => {
   return (
     <Fragment>
       <h1>Cook Book</h1>
-      <Button onClick={fetchHelper} variant="contained" color="primary">
+      <Button
+        onClick={fetchHelper}
+        variant="contained"
+        size="medium"
+        style={{
+          backgroundColor: "#476040",
+          color: "white",
+          margin: 20,
+        }}
+      >
         Load my cookbook
       </Button>
       {recipes.map((recipe) => {
