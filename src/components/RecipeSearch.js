@@ -50,8 +50,12 @@ const RecipeSearch = ({ newRecipe, setNewRecipe, sessionToken }) => {
       let recipes = await jsonData.hits;
       setRecipeList(await recipes);
       console.log(jsonData);
-
-      nextFetchUrl.current = await jsonData["_links"]["next"]["href"];
+      if(Object.keys(jsonData["_links"]).length !== 0) {
+        nextFetchUrl.current = await jsonData["_links"]["next"]["href"];
+      } else {
+        nextFetchUrl.current = null;
+      }
+      
 
       setRecipeFetchToggle(false);
     } catch (err) {
@@ -90,7 +94,7 @@ const RecipeSearch = ({ newRecipe, setNewRecipe, sessionToken }) => {
   };
 
   return (
-    <>
+    <div style={{minHeight: "40vh"}}>
       <h2>Search By Ingredient</h2>
 
       <form onSubmit={handleSubmitAddIngredient}>
@@ -159,7 +163,7 @@ const RecipeSearch = ({ newRecipe, setNewRecipe, sessionToken }) => {
       ) : (
         "No recipes found"
       )}
-    </>
+    </div>
   );
 };
 

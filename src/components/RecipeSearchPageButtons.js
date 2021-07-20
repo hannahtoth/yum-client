@@ -36,6 +36,7 @@ const RecipeSearchPageButtons = ({
   return (
     <>
       {recipeListPage.current > 1 ? (
+
         <IconButton
         style={{
             color: '#b55139',
@@ -45,11 +46,14 @@ const RecipeSearchPageButtons = ({
     
         onClick={handleClickPrevious}>
             <NavigateBefore /> 
+
+
           Previous Page
         </IconButton>
       ) : (
         <></>
       )}
+
       <IconButton 
       style={{
         color: '#b55139',
@@ -61,6 +65,7 @@ const RecipeSearchPageButtons = ({
         View More Recipes
         <NavigateNext />
       </IconButton>
+
     </>
   );
 };

@@ -107,7 +107,6 @@ const RecipeIndex = (props) => {
 
   const handleSaveNotes = async (e) => {
     e.preventDefault();
-    console.log(e.target[2]);
     let recipeId = e.target[2].getAttribute('recipeid-data');
     let updatedNotes = e.target[0].value;
     await saveNotes(recipeId, updatedNotes);
@@ -115,6 +114,12 @@ const RecipeIndex = (props) => {
 
     e.target[2].innerText = 'Notes saved!';
   };
+
+  const handleEditNotes = (e) => {
+    let parentNode  = e.target.closest("form");
+    let button = parentNode.querySelector("#save-button");
+    button.innerText = "SAVE NOTES";
+  }
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -125,7 +130,7 @@ const RecipeIndex = (props) => {
       paddingTop: '56.25%',
     },
     notes: {
-      margin: '15px 0px 15px 0px',
+      margin: '15px 0px 1px 0px',
       '& .MuiTextField-root': {
         width: '100%',
       },
@@ -142,18 +147,7 @@ const RecipeIndex = (props) => {
   return (
     <Container maxWidth="lg">
       <h1>Cook Book</h1>
-      <Button
-        onClick={fetchHelper}
-        variant="contained"
-        size="medium"
-        style={{
-          backgroundColor: '#476040',
-          color: 'white',
-          margin: 20,
-        }}
-      >
-        Load my cookbook
-      </Button>
+      <p>Search for ingredients and add recipes above!</p>
       <Grid container spacing={3}>
         {recipes.map((recipe) => {
           return (
@@ -194,15 +188,19 @@ const RecipeIndex = (props) => {
                     autoComplete="off"
                   >
                     <TextField
+                      onChange={handleEditNotes}
                       id="outlined-multiline-static"
                       label="Notes"
                       multiline
                       rows={4}
-                      defaultValue={recipe.notes || 'Enter Your Notes'}
+                      placeholder="Enter Your Notes"
+                      defaultValue={recipe.notes}
                       variant="outlined"
                     />
 
                     <Button
+                      style={{margin:"8px"}}
+                      id="save-button"
                       type="submit"
                       recipeid-data={recipe.id}
                       variant="outlined"
@@ -214,6 +212,7 @@ const RecipeIndex = (props) => {
                 </CardContent>
 
                 <Button
+                  style={{marginBottom: "5px"}}
                   onClick={deleteHelper}
                   recipeid-data={recipe.id}
                   variant="contained"
