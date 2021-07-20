@@ -35,14 +35,14 @@ const RecipeSearchPageButtons = ({
   return (
     <>
       {recipeListPage.current > 1 ? (
-        <Button variant="outlined" onClick={handleClickPrevious}>
+        <Button variant="outlined" onClick={handleClickPrevious} style={{margin: "8px"}}>
           Previous Page
         </Button>
       ) : (
         <></>
       )}
       {nextFetchUrl.current ?
-        <Button variant="outlined" onClick={handleClickNext}>
+        <Button variant="outlined" onClick={handleClickNext} style={{margin: "8px"}}>
         View More Recipes
         </Button>
         : <></>
