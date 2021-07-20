@@ -41,9 +41,13 @@ const RecipeSearchPageButtons = ({
       ) : (
         <></>
       )}
-      <Button variant="outlined" onClick={handleClickNext}>
+      {nextFetchUrl.current ?
+        <Button variant="outlined" onClick={handleClickNext}>
         View More Recipes
-      </Button>
+        </Button>
+        : <></>
+      }
+
     </>
   );
 };

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, Fragment, useRef } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState, useEffect, Fragment, useRef } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Button,
   CardMedia,
@@ -14,18 +14,17 @@ import {
   AccordionSummary,
   AccordionDetails,
   ExpandMoreIcon,
-} from "../materialuiexports";
-
+} from '../materialuiexports';
 
 const RecipeIndex = (props) => {
   const [recipes, setRecipes] = useState([]);
   const [renderTrigger, setRenderTrigger] = useState(false);
 
   const fetchRecipes = () => {
-    fetch("http://localhost:3000/cookbook/getall", {
-      method: "GET",
+    fetch('http://localhost:3000/cookbook/getall', {
+      method: 'GET',
       headers: new Headers({
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${props.sessionToken}`,
       }),
     })
@@ -47,7 +46,7 @@ const RecipeIndex = (props) => {
   //Fetch recipes
   const fetchHelper = (e) => {
     e.preventDefault();
-    console.log("fetch recipes started");
+    console.log('fetch recipes started');
     setRenderTrigger((renderTrigger) => !renderTrigger);
   };
 
@@ -57,9 +56,9 @@ const RecipeIndex = (props) => {
       let response = await fetch(
         `http://localhost:3000/cookbook/delete/${recipeId}`,
         {
-          method: "DELETE",
+          method: 'DELETE',
           headers: new Headers({
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${props.sessionToken}`,
           }),
         }
@@ -73,10 +72,10 @@ const RecipeIndex = (props) => {
 
   const deleteHelper = (e) => {
     e.preventDefault();
-    console.log("recipe deleted");
+    console.log('recipe deleted');
     console.log(e.target);
-    let clickedButton = e.target.closest("button");
-    let recipeToRemove = clickedButton.getAttribute("recipeid-data");
+    let clickedButton = e.target.closest('button');
+    let recipeToRemove = clickedButton.getAttribute('recipeid-data');
     console.log(recipeToRemove);
 
     deleteRecipe(recipeToRemove);
@@ -89,14 +88,14 @@ const RecipeIndex = (props) => {
       let response = await fetch(
         `http://localhost:3000/cookbook/update/${recipeId}`,
         {
-          method: "PUT",
+          method: 'PUT',
           body: JSON.stringify({
             cookbook: {
               notes: updatedNotes,
             },
           }),
           headers: new Headers({
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${props.sessionToken}`,
           }),
         }
@@ -108,31 +107,38 @@ const RecipeIndex = (props) => {
 
   const handleSaveNotes = async (e) => {
     e.preventDefault();
-    console.log(e.target[2]);
-    let recipeId = e.target[2].getAttribute("recipeid-data");
+    let recipeId = e.target[2].getAttribute('recipeid-data');
     let updatedNotes = e.target[0].value;
     await saveNotes(recipeId, updatedNotes);
     fetchRecipes();
+
+    e.target[2].innerText = 'Notes saved!';
   };
+
+  const handleEditNotes = (e) => {
+    let parentNode  = e.target.closest("form");
+    let button = parentNode.querySelector("#save-button");
+    button.innerText = "SAVE NOTES";
+  }
 
   const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 345,
     },
     media: {
-      height: "100%",
-      paddingTop: "56.25%",
+      height: '100%',
+      paddingTop: '56.25%',
     },
     notes: {
-      margin: "15px 0px 15px 0px",
-      "& .MuiTextField-root": {
-        width: "100%",
+      margin: '15px 0px 15px 0px',
+      '& .MuiTextField-root': {
+        width: '100%',
       },
     },
 
     accHeading: {
-      alignItems: "center",
-      justifyContent: "center",
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   }));
 
@@ -141,18 +147,7 @@ const RecipeIndex = (props) => {
   return (
     <Container maxWidth="lg">
       <h1>Cook Book</h1>
-      <Button
-        onClick={fetchHelper}
-        variant="contained"
-        size="medium"
-        style={{
-          backgroundColor: "#476040",
-          color: "white",
-          margin: 20,
-        }}
-      >
-        Load my cookbook
-      </Button>
+      <p>Search for ingredients and add recipes above!</p>
       <Grid container spacing={3}>
         {recipes.map((recipe) => {
           return (
@@ -193,15 +188,18 @@ const RecipeIndex = (props) => {
                     autoComplete="off"
                   >
                     <TextField
+                      onChange={handleEditNotes}
                       id="outlined-multiline-static"
                       label="Notes"
                       multiline
                       rows={4}
-                      defaultValue={recipe.notes || "Enter Your Notes"}
+                      placeholder="Enter Your Notes"
+                      defaultValue={recipe.notes}
                       variant="outlined"
                     />
 
                     <Button
+                      id="save-button"
                       type="submit"
                       recipeid-data={recipe.id}
                       variant="outlined"
