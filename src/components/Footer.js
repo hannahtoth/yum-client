@@ -1,51 +1,39 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import { Typography, AppBar, Toolbar } from "../materialuiexports";
+import { Typography, AppBar, Toolbar, Container } from "../materialuiexports";
 
 const Footer = ({}) => {
   const useStyles = makeStyles((theme) => ({
-    root: {
-      width: `100%`,
-      position: "sticky",
-      overflow: "hidden",
-      marginTop: "20em",
-      Bottom: "0",
+    Root: {
+       position: 'fixed',
+        bottom: 0,  
     },
 
-    title: {
-      flexGrow: 1,
-      padding: 2,
-      marginTop: 85,
-      textAlign: "left",
-    },
   }));
 
   const classes = useStyles();
   return (
-    <div className={classes.root}>
-      <AppBar
-        position="sticky"
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          backgroundColor: "#789174",
-        }}
-      >
-        <Toolbar>
-          <Typography
-            variant="h8"
-            style={{
-              marginTop: "auto",
-              color: "#D2DAC3",
-            }}
-            className={classes.title}
-          >
-            YumApp 2021
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </div>
+
+    <AppBar className={classes.Root} position="sticky"  
+    style={{
+              top: "auto",
+              bottom: 0,
+              backgroundColor: "#789174",
+            
+            }}>
+    <Container maxWidth="md">
+      <Toolbar>
+        <Typography variant="body1" 
+         style={{
+            color: "#D2DAC3",
+            
+          }}>
+          © 2021 YumApp
+        </Typography>
+      </Toolbar>
+    </Container>
+  </AppBar>
   );
 };
 

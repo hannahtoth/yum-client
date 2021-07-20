@@ -21,13 +21,14 @@ const Signup = (props) => {
       {props.loggedIn ? (
         <AppLoggedIn sessionToken={props.sessionToken} />
       ) : (
-        <form>
+        <form >
           <h1>Sign Up!</h1>
           <label>Username: </label>
           <input
             placeholder={props.username}
             onChange={(e) => props.setUsername(e.target.value)}
           ></input>
+          <br />
           <br />
           <label>Password: </label>
           <input
@@ -36,29 +37,37 @@ const Signup = (props) => {
           ></input>
           {console.log(props.password)}
           <br />
-          <label>Confirm: </label>
-          <input
+          <br />
+          <label
+          style={{
+              textAlign: 'left'
+          }}> Confirm: </label>
+          <input 
+            style={{
+               marginLeft: 15,
+            }}
             type="password"
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></input>
           {console.log(confirmPassword)}
           <br />
-
           <button
             type="button"
-            variant="contained"
-            size="medium"
+            size="large"
             style={{
               backgroundColor: "#476040",
-              color: "white",
+              color: "#D2DAC3",
               margin: 10,
             }}
             onClick={confirmAndSend}
           >
             Sign Up
           </button>
-          <br />
-          <a onClick={props.toggle}>Already have an account?</a>
+          <br />         
+          <a style={{
+                          color: '#b55139',
+                        }}
+        onClick={props.toggle}>Already have an account?</a>
         </form>
       )}{" "}
     </>

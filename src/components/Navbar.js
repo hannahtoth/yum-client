@@ -5,7 +5,7 @@ import {
   Typography,
   AppBar,
   Toolbar,
-  Link,
+
 } from "../materialuiexports";
 
 const Navbar = (props) => {
@@ -53,9 +53,7 @@ const Navbar = (props) => {
 
           <Typography
             variant="h8"
-            style={{
-              color: "white",
-            }}
+            
             className={classes.title}
           ></Typography>
 {props.loggedIn ?

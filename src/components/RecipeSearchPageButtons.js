@@ -1,5 +1,6 @@
 import React from "react";
-import { Button } from "../materialuiexports";
+import { Button , IconButton} from "../materialuiexports";
+import { NavigateBefore, NavigateNext} from '@material-ui/icons';
 
 const RecipeSearchPageButtons = ({
   recipeListPage,
@@ -35,15 +36,31 @@ const RecipeSearchPageButtons = ({
   return (
     <>
       {recipeListPage.current > 1 ? (
-        <Button variant="outlined" onClick={handleClickPrevious}>
+        <IconButton
+        style={{
+            color: '#b55139',
+            margin: 20,
+          }}
+          size='small'
+    
+        onClick={handleClickPrevious}>
+            <NavigateBefore /> 
           Previous Page
-        </Button>
+        </IconButton>
       ) : (
         <></>
       )}
-      <Button variant="outlined" onClick={handleClickNext}>
+      <IconButton 
+      style={{
+        color: '#b55139',
+        margin: 20,
+      }}
+      size='small'
+          onClick={handleClickNext}>
+          
         View More Recipes
-      </Button>
+        <NavigateNext />
+      </IconButton>
     </>
   );
 };

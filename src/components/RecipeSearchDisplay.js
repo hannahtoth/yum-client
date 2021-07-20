@@ -22,6 +22,7 @@ const RecipeSearchDisplay = ({
   const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 345,
+    
     },
 
     media: {
@@ -53,15 +54,22 @@ const RecipeSearchDisplay = ({
       <Grid container spacing={3}>
         {recipeList.slice(0, 9).map((recipeObject, index) => {
           return (
-            <Grid key={index} item xs={12} sm={6} md={4} xl={3}>
-              <Card
+            <Grid key={index} item xs={12} sm={6} md={4} xl={3} >
+              <Card 
                 style={{
                   color: '#476040',
+                 
+                 
+                 
                 }}
               >
                 <Card data-recipe-name={recipeObject.recipe.label}>
                   <CardContent>
-                    <Typography>{recipeObject.recipe.label}</Typography>
+                    <Typography style={{
+                          color: "#476040",
+                          
+                        }}>{recipeObject.recipe.label} </Typography>
+                  
                   </CardContent>
                   <CardMedia
                     className={classes.media}
@@ -85,6 +93,7 @@ const RecipeSearchDisplay = ({
                       style={{
                         background: '#ed8733',
                         color: 'white',
+                        margin: "10px"
                       }}
                       size="small"
                       onClick={handleAddNewRecipe}
