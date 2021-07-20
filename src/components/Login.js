@@ -12,23 +12,26 @@ const Login = (props) => {
                     <label>Username: </label>
                     <input placeholder={props.username} onChange={e => props.setUsername(e.target.value)}></input>
                     <br />
-
-                    <label>Password:</label>
+                    <br />
+                    <label>Password: </label>
                     <input type="password" onChange={e => props.setPassword(e.target.value)}></input>
                     <br />
                     
 
                     <button type="button" onClick={props.loginForm} 
                  
-                    variant="contained"
+                  
                     size="large"
                     style={{
                     backgroundColor:"#476040",
-                    color: "white",
+                    color: "#D2DAC3",
                     margin: 10,}}
                         >Login</button>
                     <br />
-                    <a onClick={props.toggle}>Don't have an account?</a>
+                    <a  style={{
+                          color: '#b55139',
+                        }}
+                        onClick={props.toggle}>Don't have an account?</a>
                    
                 </form>}
 
