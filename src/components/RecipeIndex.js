@@ -130,7 +130,7 @@ const RecipeIndex = (props) => {
       paddingTop: '56.25%',
     },
     notes: {
-      margin: '15px 0px 15px 0px',
+      margin: '15px 0px 1px 0px',
       '& .MuiTextField-root': {
         width: '100%',
       },
@@ -199,6 +199,7 @@ const RecipeIndex = (props) => {
                     />
 
                     <Button
+                      style={{margin:"8px"}}
                       id="save-button"
                       type="submit"
                       recipeid-data={recipe.id}
@@ -211,6 +212,7 @@ const RecipeIndex = (props) => {
                 </CardContent>
 
                 <Button
+                  style={{marginBottom: "5px"}}
                   onClick={deleteHelper}
                   recipeid-data={recipe.id}
                   variant="contained"

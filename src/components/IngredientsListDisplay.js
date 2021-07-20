@@ -37,6 +37,7 @@ const IngredientsListDisplay = ({
         variant="outlined"
         style={{
           color: "#476040",
+          margin: "5px"
         }}
       />
     );
