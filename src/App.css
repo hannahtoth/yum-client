@@ -5,21 +5,7 @@
 }
 
 
-footer{
-
-  bottom: 0;
-  }
 
 
-
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 @import url('https://fonts.googleapis.com/css2?family=Spartan&display=swap');

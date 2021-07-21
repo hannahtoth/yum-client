@@ -5,7 +5,7 @@ import {
   Typography,
   AppBar,
   Toolbar,
-  Link,
+
 } from "../materialuiexports";
 
 const Navbar = (props) => {
@@ -52,10 +52,8 @@ const Navbar = (props) => {
           <img src="yum-tagline.png" alt="logo" className={classes.logo} />
 
           <Typography
-            variant="h8"
-            style={{
-              color: "white",
-            }}
+            variant="h6"
+            
             className={classes.title}
           ></Typography>
 {props.loggedIn ?

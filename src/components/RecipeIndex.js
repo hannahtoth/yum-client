@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Button,
@@ -8,28 +8,29 @@ import {
   Typography,
   Grid,
   Container,
-  Link,
   TextField,
   Accordion,
   AccordionSummary,
   AccordionDetails,
   ExpandMoreIcon,
 } from '../materialuiexports';
+import { flexbox } from '@material-ui/system';
 
 const RecipeIndex = (props) => {
   const [recipes, setRecipes] = useState([]);
-  const [renderTrigger, setRenderTrigger] = useState(false);
+  const renderTrigger = false
 
   const fetchRecipes = () => {
     fetch('http://localhost:3000/cookbook/getall', {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${props.sessionToken}`,
+        'Authorization': `Bearer ${props.sessionToken}`,
       }),
     })
       .then((res) => res.json())
       .then((jsonData) => {
+        console.log(jsonData)
         jsonData.sort((a, b) => {
           return a.id - b.id;
         });
@@ -40,15 +41,9 @@ const RecipeIndex = (props) => {
   };
 
   useEffect(() => {
-    fetchRecipes();
+    fetchRecipes()
   }, [renderTrigger, props.newRecipe]);
 
-  //Fetch recipes
-  const fetchHelper = (e) => {
-    e.preventDefault();
-    console.log('fetch recipes started');
-    setRenderTrigger((renderTrigger) => !renderTrigger);
-  };
 
   //Delete recipe
   const deleteRecipe = async (recipeId) => {
@@ -59,7 +54,7 @@ const RecipeIndex = (props) => {
           method: 'DELETE',
           headers: new Headers({
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${props.sessionToken}`,
+            'Authorization': `Bearer ${props.sessionToken}`,
           }),
         }
       );
@@ -85,7 +80,7 @@ const RecipeIndex = (props) => {
   //Save Notes
   const saveNotes = async (recipeId, updatedNotes) => {
     try {
-      let response = await fetch(
+      await fetch(
         `http://localhost:3000/cookbook/update/${recipeId}`,
         {
           method: 'PUT',
@@ -123,38 +118,52 @@ const RecipeIndex = (props) => {
 
   const useStyles = makeStyles((theme) => ({
     root: {
+      
       maxWidth: 345,
+      height: "100%"
     },
     media: {
       height: '100%',
       paddingTop: '56.25%',
+      
+     
     },
     notes: {
-      margin: '15px 0px 15px 0px',
+    
+      margin: '15px 0px 1px 0px',
       '& .MuiTextField-root': {
         width: '100%',
       },
     },
 
     accHeading: {
+      color: '#476040',
       alignItems: 'center',
       justifyContent: 'center',
     },
+
+    cardCustom:{
+      alignSelf:"stretch"
+    }
+
   }));
 
   const classes = useStyles();
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" style={{marginBottom:"70px"}}>
       <h1>Cook Book</h1>
       <p>Search for ingredients and add recipes above!</p>
       <Grid container spacing={3}>
         {recipes.map((recipe) => {
           return (
-            <Grid key={`cb-${recipe.id}`} item xs={12} sm={6} md={4} xl={3}>
-              <Card>
+            <Grid item key={`cb-${recipe.id}`} xs={12} sm={6} md={4} xl={3}>
+              <Card className={classes.cardCustom}>
                 <CardContent>
-                  <Typography>{recipe.recipeName}</Typography>
+                  <Typography style={{
+                  color: '#476040',
+                }}
+                >{recipe.recipeName}</Typography>
                 </CardContent>
                 <CardMedia
                   className={classes.media}
@@ -173,11 +182,16 @@ const RecipeIndex = (props) => {
                       </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <Typography>{recipe.ingredients}</Typography>
+                      <Typography style={{
+                  color: '#476040',
+                }}>{recipe.ingredients}</Typography>
                     </AccordionDetails>
                   </Accordion>
                   <br />
-                  <a href={recipe.url} target="blank" alt="">
+                  <a href={recipe.url} target="blank" alt=""
+                   style={{
+                    color: '#b55139',
+                  }}>
                     View Full Recipe at {recipe.source}
                   </a>
 
@@ -196,6 +210,7 @@ const RecipeIndex = (props) => {
                       placeholder="Enter Your Notes"
                       defaultValue={recipe.notes}
                       variant="outlined"
+                  
                     />
 
                     <Button
@@ -203,7 +218,11 @@ const RecipeIndex = (props) => {
                       type="submit"
                       recipeid-data={recipe.id}
                       variant="outlined"
-                      color="primary"
+                      style={{
+                        marginTop:"8px",
+                        color: "#b55139"
+                      }}
+                     
                     >
                       Save Notes
                     </Button>
@@ -213,8 +232,12 @@ const RecipeIndex = (props) => {
                 <Button
                   onClick={deleteHelper}
                   recipeid-data={recipe.id}
-                  variant="contained"
-                  color="primary"
+                  style={{
+                    background: '#ed8733',
+                    color: 'white',
+                    marginBottom: "10px"
+                   
+                  }}
                 >
                   Remove Recipe
                 </Button>
