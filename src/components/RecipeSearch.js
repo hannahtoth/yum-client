@@ -30,13 +30,13 @@ const RecipeSearch = ({ newRecipe, setNewRecipe, sessionToken }) => {
   const previousFetchUrls = useRef([]);
   const recipeListPage = useRef(0);
 
-
   const ingredientInput = useRef("");
   const ingredientListArray = useRef([]);
   const ingredientListString = useRef("");
   const [recipeFetchToggle, setRecipeFetchToggle] = useState(false);
   const [recipeList, setRecipeList] = useState([]);
-
+  const [noIngredient, setNoIngredient] = useState('');
+ 
   useEffect(() => {
     if (recipeFetchToggle) {
       recipeQuery();
@@ -64,6 +64,7 @@ const RecipeSearch = ({ newRecipe, setNewRecipe, sessionToken }) => {
   };
 
   const addIngredientToList = () => {
+
     ingredientListArray.current = [
       ...ingredientListArray.current,
       ingredientInput.current,
@@ -84,9 +85,16 @@ const RecipeSearch = ({ newRecipe, setNewRecipe, sessionToken }) => {
 
   const handleSubmitAddIngredient = (e) => {
     e.preventDefault();
-    addIngredientToList();
-    let inputField = document.getElementById("ingredient-input");
-    inputField.value = "";
+    console.log(e)
+    if(e.target[0].value){
+      addIngredientToList();
+      let inputField = document.getElementById("ingredient-input");
+      inputField.value = "";
+      setNoIngredient('');
+    } else {
+      setNoIngredient("You must enter an ingredient")
+    }
+
   };
 
   const handleIngredientInput = (e) => {
@@ -106,6 +114,8 @@ const RecipeSearch = ({ newRecipe, setNewRecipe, sessionToken }) => {
           onChange={handleIngredientInput}
         />
         <br />
+        {noIngredient ? <p>{noIngredient}</p> : <></>}
+        <br />
         <Button
           type="submit"
           variant="contained"
@@ -115,7 +125,6 @@ const RecipeSearch = ({ newRecipe, setNewRecipe, sessionToken }) => {
             color: "white",
             margin: 20,
           }}
-          // className={classes.button}
           startIcon={<AddCircleOutlineTwoToneIcon />}
         >
           {" "}

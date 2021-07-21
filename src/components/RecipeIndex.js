@@ -14,6 +14,7 @@ import {
   AccordionDetails,
   ExpandMoreIcon,
 } from '../materialuiexports';
+import { flexbox } from '@material-ui/system';
 
 const RecipeIndex = (props) => {
   const [recipes, setRecipes] = useState([]);
@@ -24,7 +25,7 @@ const RecipeIndex = (props) => {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${props.sessionToken}`,
+        'Authorization': `Bearer ${props.sessionToken}`,
       }),
     })
       .then((res) => res.json())
@@ -53,7 +54,7 @@ const RecipeIndex = (props) => {
           method: 'DELETE',
           headers: new Headers({
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${props.sessionToken}`,
+            'Authorization': `Bearer ${props.sessionToken}`,
           }),
         }
       );
@@ -119,6 +120,7 @@ const RecipeIndex = (props) => {
     root: {
       
       maxWidth: 345,
+      height: "100%"
     },
     media: {
       height: '100%',
@@ -139,6 +141,11 @@ const RecipeIndex = (props) => {
       alignItems: 'center',
       justifyContent: 'center',
     },
+
+    cardCustom:{
+      alignSelf:"stretch"
+    }
+
   }));
 
   const classes = useStyles();
@@ -150,8 +157,8 @@ const RecipeIndex = (props) => {
       <Grid container spacing={3}>
         {recipes.map((recipe) => {
           return (
-            <Grid key={`cb-${recipe.id}`} item xs={12} sm={6} md={4} xl={3}>
-              <Card>
+            <Grid item key={`cb-${recipe.id}`} xs={12} sm={6} md={4} xl={3}>
+              <Card className={classes.cardCustom}>
                 <CardContent>
                   <Typography style={{
                   color: '#476040',

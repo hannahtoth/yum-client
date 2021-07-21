@@ -44,8 +44,9 @@ const RecipeSearchDisplay = ({
     console.log(recipeObject);
 
     addRecipeToCookbook(recipeObject, setNewRecipe, sessionToken);
-
     e.target.innerText = 'ADDED TO COOKBOOK!';
+    e.target.parentElement.style.backgroundColor = "#789174";
+    
   };
 
   return (
