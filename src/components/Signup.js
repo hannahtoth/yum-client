@@ -4,17 +4,31 @@ import AppLoggedIn from "./AppLoggedIn";
 const Signup = (props) => {
   const [confirmPassword, setConfirmPassword] = useState();
   const [failMessage, setFailMessage] = useState("");
+
+  const checkForNumsAndChars = (str) => {
+    const chars = "1234567890!@#$%^&*()"
+
+    for (let i=0; i<chars.length; i++) {
+      if(str.indexOf(chars[i]) > -1 ) {
+        return true
+      } else {
+        return false
+      }
+    }
+  }
   
   const confirmAndSend = (e) => {
-    if (props.password === confirmPassword) {
-      props.signUpForm(e);
-    } else {
-      setFailMessage("Passwords must match");
-      setTimeout(() => {
-        setFailMessage("");
-      }, 2000);
-    }
-  };
+   if (props.password !== confirmPassword){
+     setFailMessage("Passwords must match!")
+   } else if (props.password.length < 5){
+     setFailMessage("Please make your password longer!")
+   } else if (checkForNumsAndChars(props.password) === false){
+     setFailMessage("Please use a number or special character in your password!")
+   } else if (props.username.length < 4){
+     setFailMessage("Please make your username longer!")
+   } else {
+     props.signUpForm(e)
+   } }
 
   return (
     <>
@@ -25,7 +39,6 @@ const Signup = (props) => {
           <h1>Sign Up!</h1>
           <label>Username: </label>
           <input
-            placeholder={props.username}
             onChange={(e) => props.setUsername(e.target.value)}
           ></input>
           <br />
@@ -69,9 +82,10 @@ const Signup = (props) => {
                         }}
         onClick={props.toggle}>Already have an account?</a>
         </form>
-      )}{" "}
+
+      )}{failMessage ? <p>{failMessage}</p> : <></>}
     </>
   );
 };
 
-export default Signup;
+export default Signup

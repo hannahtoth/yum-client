@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import { Typography, AppBar, Toolbar, Container } from "../materialuiexports";
 
-const Footer = ({}) => {
+const Footer = () => {
   const useStyles = makeStyles((theme) => ({
     Root: {
        position: 'fixed',

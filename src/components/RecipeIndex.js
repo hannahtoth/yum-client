@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Button,
@@ -8,7 +8,6 @@ import {
   Typography,
   Grid,
   Container,
-  Link,
   TextField,
   Accordion,
   AccordionSummary,
@@ -18,7 +17,7 @@ import {
 
 const RecipeIndex = (props) => {
   const [recipes, setRecipes] = useState([]);
-  const [renderTrigger, setRenderTrigger] = useState(false);
+  const renderTrigger = false
 
   const fetchRecipes = () => {
     fetch('http://localhost:3000/cookbook/getall', {
@@ -40,15 +39,9 @@ const RecipeIndex = (props) => {
   };
 
   useEffect(() => {
-    fetchRecipes();
+    fetchRecipes()
   }, [renderTrigger, props.newRecipe]);
 
-  //Fetch recipes
-  const fetchHelper = (e) => {
-    e.preventDefault();
-    console.log('fetch recipes started');
-    setRenderTrigger((renderTrigger) => !renderTrigger);
-  };
 
   //Delete recipe
   const deleteRecipe = async (recipeId) => {
@@ -85,7 +78,7 @@ const RecipeIndex = (props) => {
   //Save Notes
   const saveNotes = async (recipeId, updatedNotes) => {
     try {
-      let response = await fetch(
+      await fetch(
         `http://localhost:3000/cookbook/update/${recipeId}`,
         {
           method: 'PUT',
