@@ -52,7 +52,7 @@ const Navbar = (props) => {
           <img src="yum-tagline.png" alt="logo" className={classes.logo} />
 
           <Typography
-            variant="h8"
+            variant="h6"
             
             className={classes.title}
           ></Typography>
