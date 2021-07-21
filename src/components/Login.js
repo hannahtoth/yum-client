@@ -10,7 +10,7 @@ const Login = (props) => {
                 <form>
                     <h1>Login</h1>
                     <label>Username: </label>
-                    <input placeholder={props.username} onChange={e => props.setUsername(e.target.value)}></input>
+                    <input onChange={e => props.setUsername(e.target.value)}></input>
                     <br />
                     <br />
                     <label>Password: </label>
