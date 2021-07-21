@@ -58,9 +58,6 @@ const RecipeSearchDisplay = ({
               <Card 
                 style={{
                   color: '#476040',
-                 
-                 
-                 
                 }}
               >
                 <Card data-recipe-name={recipeObject.recipe.label}>

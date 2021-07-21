@@ -30,6 +30,7 @@ const RecipeIndex = (props) => {
     })
       .then((res) => res.json())
       .then((jsonData) => {
+        console.log(jsonData)
         jsonData.sort((a, b) => {
           return a.id - b.id;
         });
@@ -123,13 +124,17 @@ const RecipeIndex = (props) => {
 
   const useStyles = makeStyles((theme) => ({
     root: {
+      
       maxWidth: 345,
     },
     media: {
       height: '100%',
       paddingTop: '56.25%',
+      
+     
     },
     notes: {
+    
       margin: '15px 0px 1px 0px',
       '& .MuiTextField-root': {
         width: '100%',
@@ -137,6 +142,7 @@ const RecipeIndex = (props) => {
     },
 
     accHeading: {
+      color: '#476040',
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -145,7 +151,7 @@ const RecipeIndex = (props) => {
   const classes = useStyles();
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" style={{marginBottom:"70px"}}>
       <h1>Cook Book</h1>
       <p>Search for ingredients and add recipes above!</p>
       <Grid container spacing={3}>
@@ -154,7 +160,10 @@ const RecipeIndex = (props) => {
             <Grid key={`cb-${recipe.id}`} item xs={12} sm={6} md={4} xl={3}>
               <Card>
                 <CardContent>
-                  <Typography>{recipe.recipeName}</Typography>
+                  <Typography style={{
+                  color: '#476040',
+                }}
+                >{recipe.recipeName}</Typography>
                 </CardContent>
                 <CardMedia
                   className={classes.media}
@@ -173,11 +182,16 @@ const RecipeIndex = (props) => {
                       </Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <Typography>{recipe.ingredients}</Typography>
+                      <Typography style={{
+                  color: '#476040',
+                }}>{recipe.ingredients}</Typography>
                     </AccordionDetails>
                   </Accordion>
                   <br />
-                  <a href={recipe.url} target="blank" alt="">
+                  <a href={recipe.url} target="blank" alt=""
+                   style={{
+                    color: '#b55139',
+                  }}>
                     View Full Recipe at {recipe.source}
                   </a>
 
@@ -196,15 +210,19 @@ const RecipeIndex = (props) => {
                       placeholder="Enter Your Notes"
                       defaultValue={recipe.notes}
                       variant="outlined"
+                  
                     />
 
                     <Button
-                      style={{margin:"8px"}}
                       id="save-button"
                       type="submit"
                       recipeid-data={recipe.id}
                       variant="outlined"
-                      color="primary"
+                      style={{
+                        marginTop:"8px",
+                        color: "#b55139"
+                      }}
+                     
                     >
                       Save Notes
                     </Button>
@@ -212,11 +230,14 @@ const RecipeIndex = (props) => {
                 </CardContent>
 
                 <Button
-                  style={{marginBottom: "5px"}}
                   onClick={deleteHelper}
                   recipeid-data={recipe.id}
-                  variant="contained"
-                  color="primary"
+                  style={{
+                    background: '#ed8733',
+                    color: 'white',
+                    marginBottom: "10px"
+                   
+                  }}
                 >
                   Remove Recipe
                 </Button>
