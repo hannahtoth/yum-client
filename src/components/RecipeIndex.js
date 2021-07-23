@@ -1,3 +1,5 @@
+import APIURL from '../helpers/environment'
+
 import React, { useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -21,7 +23,7 @@ const RecipeIndex = (props) => {
   const renderTrigger = false
 
   const fetchRecipes = () => {
-    fetch('http://localhost:3000/cookbook/getall', {
+    fetch(`${APIURL}/cookbook/getall`, {
       method: 'GET',
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -81,7 +83,7 @@ const RecipeIndex = (props) => {
   const saveNotes = async (recipeId, updatedNotes) => {
     try {
       await fetch(
-        `http://localhost:3000/cookbook/update/${recipeId}`,
+        `${APIURL}/cookbook/update/${recipeId}`,
         {
           method: 'PUT',
           body: JSON.stringify({
