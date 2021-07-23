@@ -1,3 +1,5 @@
+import APIURL from '../helpers/environment';
+
 import React from "react";
 import { useState, useEffect } from "react";
 import Login from "./Login";
@@ -31,7 +33,7 @@ const Portal = () => {
 
   const loginForm = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3000/user/login", {
+    fetch(`${APIURL}/user/login`, {
       method: "POST",
       body: JSON.stringify({
         user: { username: username, password: password },
@@ -48,7 +50,7 @@ const Portal = () => {
 
   const signUpForm = (e) => {
     e.preventDefault();
-    fetch("http://localhost:3000/user/register", {
+    fetch(`${APIURL}/user/register`, {
       method: "POST",
       body: JSON.stringify({
         user: { username: username, password: password },

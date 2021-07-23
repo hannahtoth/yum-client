@@ -1,10 +1,11 @@
+import APIURL from "../../helpers/environment";
 
     const addRecipeToCookbook = async (recipeObject, setNewRecipe, sessionToken) => {
         let {label, image, source, url, ingredientLines} = recipeObject.recipe;
         let ingredientListString = ingredientLines.join(', ');
 
     try {
-        let results = await fetch('http://localhost:3000/cookbook/create', {
+        let results = await fetch(`${APIURL}/cookbook/create`, {
                 method: 'POST',
                 body: JSON.stringify({
                     cookbook: {
