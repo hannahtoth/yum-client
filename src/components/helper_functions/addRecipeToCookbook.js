@@ -21,10 +21,10 @@
                 })
             })
         let jsonData = await results.json()
-        console.log(jsonData)
+        //console.log(jsonData)
         setNewRecipe(newRecipe=>true);  
     } catch (error) {
-        console.log(`Error: ${error}`)
+        //console.log(`Error: ${error}`)
     }
     
 }

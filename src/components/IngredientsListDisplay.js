@@ -9,7 +9,7 @@ const IngredientsListDisplay = ({
   removeIngredientFromList,
 }) => {
   const handleDelete = (e) => {
-    console.log("you clicked delete");
+    //console.log("you clicked delete");
     //Get ingredient to remove
     let clickAncestor = e.target.closest(".MuiChip-root");
     let ingredientToRemove = clickAncestor.getAttribute("ingredient");
@@ -25,7 +25,7 @@ const IngredientsListDisplay = ({
     //Refetch and re-render
     removeIngredientFromList();
 
-    console.log(ingredientListArray.current);
+    //console.log(ingredientListArray.current);
   };
   return ingredientListArray.current.map((ingredient, index) => {
     return (
