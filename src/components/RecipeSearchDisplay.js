@@ -41,7 +41,7 @@ const RecipeSearchDisplay = ({
       (object) => object.recipe.label === recipeName
     );
 
-    console.log(recipeObject);
+    //console.log(recipeObject);
 
     addRecipeToCookbook(recipeObject, setNewRecipe, sessionToken);
     e.target.innerText = 'ADDED TO COOKBOOK!';

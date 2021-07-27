@@ -49,7 +49,7 @@ const RecipeSearch = ({ newRecipe, setNewRecipe, sessionToken }) => {
       let jsonData = await results.json();
       let recipes = await jsonData.hits;
       setRecipeList(await recipes);
-      console.log(jsonData);
+      //console.log(jsonData);
       if(Object.keys(jsonData["_links"]).length !== 0) {
         nextFetchUrl.current = await jsonData["_links"]["next"]["href"];
       } else {
@@ -73,7 +73,7 @@ const RecipeSearch = ({ newRecipe, setNewRecipe, sessionToken }) => {
 
     currentFetchUrl.current = `${baseUrl}?type=public&q=${ingredientListString.current}&app_id=${appId}&app_key=${appKey}${fields}`;
     recipeListPage.current = 1;
-    console.log(`page: ${recipeListPage.current}`);
+    //console.log(`page: ${recipeListPage.current}`);
     setRecipeFetchToggle(true);
   };
 

@@ -17,8 +17,8 @@ const RecipeSearchPageButtons = ({
       currentFetchUrl.current,
     ];
     currentFetchUrl.current = nextFetchUrl.current;
-    console.log(`page: ${recipeListPage.current}`);
-    console.log(previousFetchUrls.current);
+    //console.log(`page: ${recipeListPage.current}`);
+    //console.log(previousFetchUrls.current);
     setRecipeFetchToggle(true);
   };
 
@@ -28,8 +28,8 @@ const RecipeSearchPageButtons = ({
     currentFetchUrl.current =
       previousFetchUrls.current[recipeListPage.current - 1];
     previousFetchUrls.current.pop();
-    console.log(previousFetchUrls.current);
-    console.log(`page: ${recipeListPage.current}`);
+    //console.log(previousFetchUrls.current);
+    //console.log(`page: ${recipeListPage.current}`);
     setRecipeFetchToggle(true);
   };
 
