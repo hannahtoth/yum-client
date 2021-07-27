@@ -27,6 +27,7 @@ const Signup = (props) => {
    } else if (props.username.length < 4){
      setFailMessage("Please make your username longer!")
    } else {
+     setFailMessage("")
      props.signUpForm(e)
    } }
 
@@ -48,7 +49,6 @@ const Signup = (props) => {
             type="password"
             onChange={(e) => props.setPassword(e.target.value)}
           ></input>
-          {console.log(props.password)}
           <br />
           <br />
           <label
@@ -62,7 +62,6 @@ const Signup = (props) => {
             type="password"
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></input>
-          {console.log(confirmPassword)}
           <br />
           <button
             type="button"

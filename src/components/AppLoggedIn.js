@@ -7,7 +7,7 @@ const AppLoggedIn = (props) => {
 
   useEffect(() => {
     if (newRecipe) {
-      console.log(`Add New Recipe Triggered`);
+      //console.log(`Add New Recipe Triggered`);
       //Do the things if new recipe is set to true on state change.
     }
     setNewRecipe(false);

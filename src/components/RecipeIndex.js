@@ -37,7 +37,7 @@ const RecipeIndex = (props) => {
           return a.id - b.id;
         });
         setRecipes(jsonData);
-        console.log(jsonData);
+        //console.log(jsonData);
       })
       .catch((err) => console.log(err));
   };
@@ -61,7 +61,7 @@ const RecipeIndex = (props) => {
         }
       );
       let jsonData = await response.json();
-      console.log(jsonData);
+      //console.log(jsonData);
     } catch (err) {
       console.log(err);
     }
@@ -69,11 +69,11 @@ const RecipeIndex = (props) => {
 
   const deleteHelper = (e) => {
     e.preventDefault();
-    console.log('recipe deleted');
-    console.log(e.target);
+    //console.log('recipe deleted');
+    //console.log(e.target);
     let clickedButton = e.target.closest('button');
     let recipeToRemove = clickedButton.getAttribute('recipeid-data');
-    console.log(recipeToRemove);
+    //console.log(recipeToRemove);
 
     deleteRecipe(recipeToRemove);
     fetchRecipes();
