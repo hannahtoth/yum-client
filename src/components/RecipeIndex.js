@@ -51,7 +51,7 @@ const RecipeIndex = (props) => {
   const deleteRecipe = async (recipeId) => {
     try {
       let response = await fetch(
-        `http://localhost:3000/cookbook/delete/${recipeId}`,
+        `${APIURL}/cookbook/delete/${recipeId}`,
         {
           method: 'DELETE',
           headers: new Headers({
