@@ -1,4 +1,4 @@
-# Poetry App Client
+# Yum Recipe App Client
 This app retrieves recipe data from the [Edaman Api](https://www.edamam.com/) and allows users to save recipes to their personal cookbook.  Features include:
 - Registration / Login
 - Recipe search by one or multiple ingredients
